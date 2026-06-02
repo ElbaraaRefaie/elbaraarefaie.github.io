@@ -1122,9 +1122,17 @@
     font-family: 'JetBrains Mono', monospace;
   }
 
-  .contact-value {
+  /* .contact-value {
     font-size: 14px;
     color: var(--text);
+  } */
+  .contact-value {
+    text-decoration: none; /* Removes the default hyperlink underline */
+    color: inherit;       /* Keeps the same text color as before */
+  }
+  
+  .contact-value:hover {
+    color: var(--accent); /* Optional: changes color when hovered to show it is clickable */
   }
 
   .references-clean-box {
