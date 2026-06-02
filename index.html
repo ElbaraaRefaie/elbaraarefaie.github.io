@@ -79,23 +79,27 @@
 
   /* NAV */
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 20px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, var(--bg), transparent);
-    backdrop-filter: blur(2px);
-    transition: background 0.4s ease;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Pushes logo/toggle to left, links to right */
+  align-items: center;
+  padding: 1.5rem 4%;
+  background: rgba(10, 10, 10, 0.85); /* Semi-transparent background */
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s, border-color 0.3s;
+}
 
-  .nav-left {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
+/* Align the logo and the toggle vertically and give them space */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Space between logo text and the toggle switch */
+}
 
   .nav-logo {
     font-family: 'Bebas Neue', sans-serif;
@@ -161,21 +165,32 @@
   }
 
   .nav-links {
-    display: flex;
-    gap: 36px;
-    list-style: none;
-  }
+  /* Ensure the links display horizontally instead of stacked */
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem; /* Space between each individual menu link */
+  margin: 0;
+  padding: 0;
+}
 
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
+/* Style the links and ensure they are visible */
+.nav-links a {
+  text-decoration: none;
+  color: var(--text); /* Uses your light font color */
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
 
+/* Hover state */
+.nav-links a:hover {
+  color: var(--accent); /* Changes color on hover */
+}
+    
   /* HERO */
   .hero {
     min-height: 100vh;
