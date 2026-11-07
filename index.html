@@ -4,1283 +4,321 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Elbaraa Refaie — Senior Automation Engineer</title>
+<meta name="description" content="Senior Automation Engineer specializing in EOL packaging machines, Schneider PacDrive 3, MC12 MultiCarrier and servo motion control. 100+ machines commissioned across 6 countries.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0a;
-    --bg2: #111111;
-    --bg3: #1a1a1a;
-    --accent: #e86c2f;
-    --accent2: #f5a623;
-    --text: #f0ede8;
-    --muted: #888880;
-    --border: #2a2a2a;
-    --green: #4ade80;
-    --invert-marquee: brightness(0) invert(1);
+    --bg:#0a0a0a; --bg2:#111111; --bg3:#1a1a1a;
+    --accent:#e86c2f; --accent2:#f5a623;
+    --text:#f0ede8; --muted:#888880; --border:#2a2a2a;
+    --nav-bg:rgba(10,10,10,.85);
   }
-
-  /* Light Theme Variables */
   [data-theme="light"] {
-    --bg: #fbfbfa;
-    --bg2: #ffffff;
-    --bg3: #ecece9;
-    --text: #111111;
-    --muted: #70706a;
-    --border: #d4d4cd;
-    --invert-marquee: brightness(0);
+    --bg:#fbfbfa; --bg2:#ffffff; --bg3:#ecece9;
+    --text:#111111; --muted:#70706a; --border:#d4d4cd;
+    --nav-bg:rgba(251,251,250,.88);
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
   body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: none;
-    transition: background 0.4s ease, color 0.4s ease;
+    background:var(--bg); color:var(--text);
+    font-family:'DM Sans',sans-serif; font-weight:300;
+    overflow-x:hidden; transition:background .4s ease,color .4s ease;
   }
+  @media (hover:hover) and (pointer:fine) { body { cursor:none; } }
+  @media (hover:none), (pointer:coarse) { .cursor,.cursor-ring { display:none; } }
 
-  /* Custom cursor */
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.15s ease;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    transition: all 0.08s ease;
-    opacity: 0.5;
-  }
+  .cursor { width:12px;height:12px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform .15s ease;mix-blend-mode:difference; }
+  .cursor-ring { width:36px;height:36px;border:1px solid var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;opacity:.5; }
 
-  /* Noise overlay */
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9997;
-    opacity: 0.4;
+    content:'';position:fixed;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events:none;z-index:9997;opacity:.4;
   }
 
   /* NAV */
   nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between; /* Pushes logo/toggle to left, links to right */
-  align-items: center;
-  padding: 1.5rem 4%;
-  background: rgba(10, 10, 10, 0.85); /* Semi-transparent background */
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.3s, border-color 0.3s;
-}
-
-/* Align the logo and the toggle vertically and give them space */
-.nav-left {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem; /* Space between logo text and the toggle switch */
-}
-
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 3px;
-    color: var(--accent);
+    position:fixed;top:0;left:0;width:100%;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:1.1rem 4%;background:var(--nav-bg);backdrop-filter:blur(10px);
+    z-index:1000;border-bottom:1px solid var(--border);
+    transition:background .3s,border-color .3s;
   }
+  .nav-left,.nav-right { display:flex;align-items:center;gap:1rem; }
+  .nav-logo { font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--accent); }
+  .nav-links { display:flex;list-style:none;gap:1.6rem;margin:0;padding:0; }
+  .nav-links a { text-decoration:none;color:var(--text);font-size:.78rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;transition:color .3s; }
+  .nav-links a:hover { color:var(--accent); }
 
-  /* FANCY TOGGLE BUTTON */
-  .theme-toggle-wrap {
-    display: flex;
-    align-items: center;
-  }
+  /* Theme toggle */
+  .theme-toggle-cb { display:none; }
+  .theme-toggle-label { width:54px;height:26px;background:var(--bg3);border:1px solid var(--border);border-radius:50px;position:relative;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0 6px;transition:background .3s,border-color .3s; }
+  .theme-toggle-label .inner-ball { width:18px;height:18px;background:var(--accent);border-radius:50%;position:absolute;top:3px;left:4px;transition:transform .3s cubic-bezier(.4,0,.2,1); }
+  .theme-toggle-label svg { width:12px;height:12px;fill:var(--muted);z-index:1;transition:fill .3s; }
+  .theme-toggle-cb:checked + .theme-toggle-label .inner-ball { transform:translateX(26px); }
+  .theme-toggle-cb:checked + .theme-toggle-label .sun-icon { fill:#fff; }
+  .theme-toggle-cb:not(:checked) + .theme-toggle-label .moon-icon { fill:#fff; }
 
-  .theme-toggle-cb {
-    display: none;
-  }
+  /* Language toggle */
+  .lang-toggle { display:flex;border:1px solid var(--border);background:var(--bg3);font-family:'JetBrains Mono',monospace;cursor:pointer;padding:0;transition:border-color .3s; }
+  .lang-toggle:hover { border-color:var(--accent); }
+  .lang-toggle span { font-size:11px;letter-spacing:1.5px;padding:6px 10px;color:var(--muted);transition:all .25s; }
+  .lang-toggle span.on { background:var(--accent);color:#0a0a0a;font-weight:500; }
 
-  .theme-toggle-label {
-    width: 54px;
-    height: 26px;
-    background-color: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 50px;
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 6px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-  }
+  /* CV button */
+  .cv-btn { display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#0a0a0a;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:9px 16px;transition:all .2s;white-space:nowrap; }
+  .cv-btn:hover { background:var(--accent2);transform:translateY(-2px); }
+  .cv-btn svg { width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round; }
 
-  .theme-toggle-label .inner-ball {
-    width: 18px;
-    height: 18px;
-    background-color: var(--accent);
-    border-radius: 50%;
-    position: absolute;
-    top: 3px;
-    left: 4px;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .theme-toggle-label svg {
-    width: 12px;
-    height: 12px;
-    fill: var(--muted);
-    z-index: 1;
-    transition: fill 0.3s ease;
-  }
-
-  .theme-toggle-cb:checked + .theme-toggle-label .inner-ball {
-    transform: translateX(26px);
-  }
-
-  .theme-toggle-cb:checked + .theme-toggle-label .sun-icon {
-    fill: var(--bg);
-  }
-
-  body:not([data-theme="light"]) .moon-icon {
-    fill: var(--bg);
-  }
-
-
-  /* Ensure the links display horizontally instead of stacked */
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 2rem; /* Space between each individual menu link */
-  margin: 0;
-  padding: 0;
-}
-
-/* Style the links and ensure they are visible */
-.nav-links a {
-  text-decoration: none;
-  color: var(--text); /* Uses your light font color */
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  transition: color 0.3s;
-}
-
-/* Hover state */
-.nav-links a:hover {
-  color: var(--accent); /* Changes color on hover */
-}
-    
   /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
-  }
+  .hero { min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden; }
+  .hero-left { display:flex;flex-direction:column;justify-content:center;padding:120px 60px 80px;position:relative;z-index:2; }
+  .hero-tag { font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp .8s .2s forwards; }
+  .hero-name { font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,7vw,110px);line-height:.9;letter-spacing:2px;margin-bottom:8px;opacity:0;animation:fadeUp .8s .4s forwards; }
+  .hero-name span { color:var(--accent); }
+  .hero-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2.5vw,32px);letter-spacing:4px;color:var(--muted);margin-bottom:40px;opacity:0;animation:fadeUp .8s .6s forwards; }
+  .hero-desc { font-size:15px;line-height:1.8;color:var(--muted);max-width:500px;margin-bottom:48px;opacity:0;animation:fadeUp .8s .8s forwards; }
+  .hero-stats { display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:48px;opacity:0;animation:fadeUp .8s 1s forwards; }
+  .stat-box { background:var(--bg2);border:1px solid var(--border);padding:20px 16px;position:relative;overflow:hidden;transition:border-color .3s,background .4s; }
+  .stat-box:hover { border-color:var(--accent); }
+  .stat-box::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s; }
+  .stat-box:hover::before { transform:scaleX(1); }
+  .stat-num { font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--accent);line-height:1;margin-bottom:4px; }
+  .stat-label { font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase; }
+  .hero-cta { display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s 1.2s forwards; }
+  .btn-primary,.btn-outline { padding:14px 28px;font-size:12px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .2s;font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px; }
+  .btn-primary { background:var(--accent);color:#0a0a0a;font-weight:700; }
+  .btn-primary:hover { background:var(--accent2);transform:translateY(-2px); }
+  .btn-outline { border:1px solid var(--border);color:var(--muted); }
+  .btn-outline:hover { border-color:var(--accent);color:var(--accent); }
+  .btn-outline svg { width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round; }
 
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 120px 60px 80px;
-    position: relative;
-    z-index: 2;
-  }
+  .hero-right { position:relative;display:flex;align-items:center;justify-content:center; }
+  .hero-visual { position:absolute;inset:0;display:flex;align-items:center;justify-content:center; }
+  .gear-svg { opacity:0;animation:fadeIn 1s 1.5s forwards;max-width:100%; }
+  .rotating-slow { animation:rotateSlow 20s linear infinite; }
+  .rotating-medium { animation:rotateSlow 12s linear infinite; }
+  .rotating-fast { animation:rotateReverse 8s linear infinite; }
+  @keyframes rotateSlow { to { transform:rotate(360deg); } }
+  @keyframes rotateReverse { to { transform:rotate(-360deg); } }
+  .tech-tags { position:absolute;right:60px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;opacity:0;animation:fadeUp .8s 1.4s forwards; }
+  .tech-tag { font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;padding:8px 14px;border:1px solid var(--border);background:var(--bg);transition:all .2s;white-space:nowrap; }
+  .tech-tag:hover { border-color:var(--accent);color:var(--accent); }
+  .scroll-indicator { position:absolute;bottom:40px;left:60px;display:flex;align-items:center;gap:12px;opacity:0;animation:fadeIn 1s 2s forwards; }
+  .scroll-line { width:40px;height:1px;background:var(--muted);position:relative;overflow:hidden; }
+  .scroll-line::after { content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--accent);animation:scrollLine 2s ease infinite; }
+  @keyframes scrollLine { to { left:100%; } }
+  .scroll-text { font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted); }
+  @keyframes fadeUp { from { opacity:0;transform:translateY(30px); } to { opacity:1;transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
-  .hero-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-
-  .hero-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(64px, 7vw, 110px);
-    line-height: 0.9;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-
-  .hero-name span { color: var(--accent); }
-
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(18px, 2.5vw, 32px);
-    letter-spacing: 4px;
-    color: var(--muted);
-    margin-bottom: 40px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-  }
-
-  .hero-desc {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--muted);
-    max-width: 480px;
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
-
-  .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s 1s forwards;
-  }
-
-  .stat-box {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 20px 16px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s, background 0.4s ease;
-  }
-  .stat-box:hover { border-color: var(--accent); }
-  .stat-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s;
-  }
-  .stat-box:hover::before { transform: scaleX(1); }
-
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 38px;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .stat-label {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 16px;
-    opacity: 0;
-    animation: fadeUp 0.8s 1.2s forwards;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #0a0a0a;
-    padding: 14px 32px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s;
-    font-family: 'DM Sans', sans-serif;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
-
-  .btn-outline {
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 14px 32px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: all 0.2s;
-    font-family: 'DM Sans', sans-serif;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
-  .hero-right {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero-visual {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .gear-svg {
-    opacity: 0;
-    animation: fadeIn 1s 1.5s forwards;
-  }
-
-  .rotating-slow { animation: rotateSlow 20s linear infinite; }
-  .rotating-medium { animation: rotateMedium 12s linear infinite; }
-  .rotating-fast { animation: rotateReverse 8s linear infinite; }
-
-  @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  @keyframes rotateMedium { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-  @keyframes rotateReverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
-
-  .tech-tags {
-    position: absolute;
-    right: 60px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    opacity: 0;
-    animation: fadeUp 0.8s 1.4s forwards;
-  }
-
-  .tech-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    padding: 8px 14px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    transition: all 0.2s, background 0.4s ease, border-color 0.4s ease;
-    white-space: nowrap;
-  }
-  .tech-tag:hover { border-color: var(--accent); color: var(--accent); }
-
-  .scroll-indicator {
-    position: absolute;
-    bottom: 40px;
-    left: 60px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    opacity: 0;
-    animation: fadeIn 1s 2s forwards;
-  }
-
-  .scroll-line {
-    width: 40px;
-    height: 1px;
-    background: var(--muted);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .scroll-line::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: var(--accent);
-    animation: scrollLine 2s ease infinite;
-  }
-
-  @keyframes scrollLine {
-    to { left: 100%; }
-  }
-
-  .scroll-text {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  @media (max-width: 1024px) {
-    .nav-links { display: none; }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* SECTION COMMON */
-  section {
-    padding: 100px 60px;
-    position: relative;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 20px;
-    margin-bottom: 64px;
-  }
-
-  .section-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--accent);
-    letter-spacing: 2px;
-  }
-
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(42px, 5vw, 72px);
-    letter-spacing: 3px;
-    line-height: 1;
-  }
-
-  .section-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-    margin-left: 20px;
-    transition: background 0.4s ease;
-  }
+  /* SECTIONS */
+  section { padding:100px 60px;position:relative; }
+  .section-header { display:flex;align-items:baseline;gap:20px;margin-bottom:64px; }
+  .section-num { font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:2px; }
+  .section-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,5vw,72px);letter-spacing:3px;line-height:1;text-transform:uppercase; }
+  .section-line { flex:1;height:1px;background:var(--border);margin-left:20px; }
 
   /* ABOUT */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 80px;
-    align-items: start;
-  }
-
-  .about-text p {
-    font-size: 16px;
-    line-height: 1.9;
-    color: var(--muted);
-    margin-bottom: 20px;
-  }
-
-  .about-text p strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .highlight-block {
-    border-left: 2px solid var(--accent);
-    padding: 20px 24px;
-    background: var(--bg2);
-    margin: 32px 0;
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--text);
-    font-style: italic;
-    transition: background 0.4s ease;
-  }
-
-  .about-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    transition: border-color 0.4s ease;
-  }
-
-  .info-label {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .info-value {
-    font-size: 13px;
-    color: var(--text);
-    text-align: right;
-  }
-
-  .lang-bars { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
-
-  .lang-item { display: flex; flex-direction: column; gap: 6px; }
-
-  .lang-top { display: flex; justify-content: space-between; font-size: 12px; }
-
-  .lang-name { color: var(--text); }
-  .lang-level { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 10px; }
-
-  .lang-bar {
-    height: 2px;
-    background: var(--border);
-    position: relative;
-    overflow: hidden;
-    transition: background 0.4s ease;
-  }
-
-  .lang-fill {
-    height: 100%;
-    background: var(--accent);
-    width: 0;
-    transition: width 1.5s ease;
-  }
+  .about-grid { display:grid;grid-template-columns:1.2fr .8fr;gap:80px;align-items:start; }
+  .about-text p { font-size:16px;line-height:1.9;color:var(--muted);margin-bottom:20px; }
+  .about-text p strong { color:var(--text);font-weight:500; }
+  .highlight-block { border-left:2px solid var(--accent);padding:20px 24px;background:var(--bg2);margin:32px 0;font-size:15px;line-height:1.8;color:var(--text);font-style:italic; }
+  .about-sidebar { display:flex;flex-direction:column;gap:16px; }
+  .info-row { display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid var(--border); }
+  .info-label { font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'JetBrains Mono',monospace; }
+  .info-value { font-size:13px;color:var(--text);text-align:right; }
+  .lang-bars { display:flex;flex-direction:column;gap:12px;margin-top:32px; }
+  .lang-item { display:flex;flex-direction:column;gap:6px; }
+  .lang-top { display:flex;justify-content:space-between;font-size:12px; }
+  .lang-name { color:var(--text); }
+  .lang-level { color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px; }
+  .lang-bar,.skill-bar { height:2px;background:var(--border);position:relative;overflow:hidden; }
+  .lang-fill { height:100%;background:var(--accent);width:0;transition:width 1.5s ease; }
 
   /* EXPERIENCE */
-  .experience-section { background: var(--bg2); transition: background 0.4s ease; }
-
-  .exp-timeline {
-    position: relative;
-    padding-left: 40px;
-  }
-
-  .exp-timeline::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 1px;
-    background: var(--border);
-    transition: background 0.4s ease;
-  }
-
-  .exp-item {
-    position: relative;
-    margin-bottom: 64px;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: all 0.6s ease;
-  }
-
-  .exp-item.visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .exp-dot {
-    position: absolute;
-    left: -46px;
-    top: 6px;
-    width: 12px; height: 12px;
-    border: 2px solid var(--accent);
-    background: var(--bg);
-    border-radius: 50%;
-    transition: background 0.4s ease;
-  }
-
-  .exp-dot.active { background: var(--accent); }
-
-  .exp-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 4px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .exp-company {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px;
-    letter-spacing: 2px;
-    color: var(--text);
-  }
-
-  .exp-date {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 1px;
-  }
-
-  .exp-role {
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .exp-location {
-    font-size: 11px;
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    margin-bottom: 20px;
-  }
-
-  .exp-desc {
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--muted);
-    margin-bottom: 16px;
-    font-style: italic;
-  }
-
-  .exp-bullets {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .exp-bullets li {
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--muted);
-    padding-left: 20px;
-    position: relative;
-  }
-
-  .exp-bullets li::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-    font-size: 12px;
-  }
-
-  .exp-bullets li strong { color: var(--text); font-weight: 500; }
-
-  .exp-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 20px;
-  }
-
-  .exp-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 4px 10px;
-    letter-spacing: 1px;
-    transition: border-color 0.4s ease;
-  }
+  .experience-section,.skills-section,.alt-section { background:var(--bg2); }
+  .exp-timeline { position:relative;padding-left:40px; }
+  .exp-timeline::before { content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--border); }
+  .exp-item { position:relative;margin-bottom:64px;opacity:0;transform:translateX(-20px);transition:all .6s ease; }
+  .exp-item.visible { opacity:1;transform:translateX(0); }
+  .exp-dot { position:absolute;left:-46px;top:6px;width:12px;height:12px;border:2px solid var(--accent);background:var(--bg);border-radius:50%; }
+  .exp-dot.active { background:var(--accent); }
+  .exp-meta { display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;flex-wrap:wrap;gap:8px; }
+  .exp-company { font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--text); }
+  .exp-date { font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:1px; }
+  .exp-role { font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px; }
+  .exp-location { font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:20px; }
+  .exp-desc { font-size:14px;line-height:1.8;color:var(--muted);margin-bottom:16px;font-style:italic; }
+  .exp-bullets { list-style:none;display:flex;flex-direction:column;gap:10px; }
+  .exp-bullets li { font-size:14px;line-height:1.7;color:var(--muted);padding-left:20px;position:relative; }
+  .exp-bullets li::before { content:'→';position:absolute;left:0;color:var(--accent);font-size:12px; }
+  .exp-bullets li strong { color:var(--text);font-weight:500; }
+  .exp-tags { display:flex;flex-wrap:wrap;gap:8px;margin-top:20px; }
+  .exp-tag { font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);border:1px solid var(--border);padding:4px 10px;letter-spacing:1px; }
 
   /* PROJECTS */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
+  .projects-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2px; }
+  .project-card { background:var(--bg2);padding:40px 32px;position:relative;overflow:hidden;transition:opacity .6s ease,transform .6s ease,background .3s ease;opacity:0;transform:translateY(20px);display:flex;flex-direction:column;justify-content:space-between; }
+  .project-card.visible { opacity:1;transform:translateY(0); }
+  .project-card:hover { background:var(--bg3); }
+  .project-card::after { content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s ease; }
+  .project-card:hover::after { transform:scaleX(1); }
+  .project-card-wide { grid-column:span 2; }
+  .project-card-full { grid-column:span 3; }
+  .project-num { font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;margin-bottom:20px;display:block; }
+  .project-title { font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;line-height:1.1;margin-bottom:8px;color:var(--text); }
+  .project-subtitle { font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;font-family:'JetBrains Mono',monospace; }
+  .project-desc { font-size:13px;line-height:1.8;color:var(--muted);margin-bottom:24px; }
+  .project-specs { display:flex;flex-direction:column;gap:8px;margin-bottom:24px; }
+  .spec-row { display:flex;justify-content:space-between;gap:16px;font-size:11px;padding:6px 0;border-bottom:1px solid var(--border); }
+  .spec-key { color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px; }
+  .spec-val { color:var(--text);text-align:right;font-weight:500; }
+  .spec-val.hl { color:var(--accent); }
+  .project-footer-row { display:flex;justify-content:space-between;align-items:center;margin-top:auto;gap:16px; }
+  .project-badge { display:inline-block;background:var(--border);color:var(--text);font-size:10px;font-weight:700;letter-spacing:2px;padding:4px 12px;text-transform:uppercase;font-family:'JetBrains Mono',monospace; }
+  .project-btn-video { background:var(--accent);color:#0a0a0a;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:8px 16px;text-transform:uppercase;text-decoration:none;transition:all .2s; }
+  .project-btn-video:hover { background:var(--accent2);transform:translateY(-2px); }
+  .module-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:24px 0; }
+  .module { background:var(--bg);padding:20px;border:1px solid var(--border); }
+  .module-id { font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:10px; }
+  .module-name { font-size:14px;font-weight:500;margin-bottom:8px; }
+  .module-text { font-size:12px;color:var(--muted);line-height:1.7; }
+  .split-2 { display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start; }
 
-  .project-card {
-    background: var(--bg2);
-    padding: 40px 32px;
-    position: relative;
-    overflow: hidden;
-    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s ease;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(20px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .project-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .project-card:hover { background: var(--bg3); }
-
-  .project-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-  }
-
-  .project-card:hover::after { transform: scaleX(1); }
-
-  .project-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-    display: block;
-  }
-
-  .project-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 2px;
-    line-height: 1.1;
-    margin-bottom: 8px;
-    color: var(--text);
-  }
-
-  .project-subtitle {
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .project-desc {
-    font-size: 13px;
-    line-height: 1.8;
-    color: var(--muted);
-    margin-bottom: 24px;
-  }
-
-  .project-specs {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-
-  .spec-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--border);
-    transition: border-color 0.4s ease;
-  }
-
-  .spec-key {
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-  }
-
-  .spec-val {
-    color: var(--text);
-    text-align: right;
-    font-weight: 500;
-  }
-
-  .project-footer-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: auto;
-    gap: 16px;
-  }
-
-  .project-badge {
-    display: inline-block;
-    background: var(--border);
-    color: var(--text);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    padding: 4px 12px;
-    text-transform: uppercase;
-    font-family: 'JetBrains Mono', monospace;
-    transition: background 0.4s ease;
-  }
-
-  .project-btn-video {
-    background: var(--accent);
-    color: #0a0a0a;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    padding: 8px 16px;
-    text-transform: uppercase;
-    text-decoration: none;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.2s ease;
-  }
-  .project-btn-video:hover {
-    background: var(--accent2);
-    transform: translateY(-2px);
-  }
-
-  .project-card-wide {
-    grid-column: span 2;
-  }
+  /* VIDEOS */
+  .videos-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:2px; }
+  .video-card { background:var(--bg);opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease,background .3s; }
+  .video-card.visible { opacity:1;transform:translateY(0); }
+  .video-frame { position:relative;aspect-ratio:16/9;background:#000;overflow:hidden; }
+  .video-frame img,.video-frame iframe { position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover; }
+  .video-frame img { opacity:.8;transition:opacity .3s,transform .4s; }
+  .video-play { position:absolute;inset:0;width:100%;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center; }
+  .video-play span { width:64px;height:64px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;transition:transform .25s,background .25s; }
+  .video-play svg { width:22px;height:22px;fill:#0a0a0a;margin-left:3px; }
+  .video-card:hover .video-frame img { opacity:1;transform:scale(1.04); }
+  .video-card:hover .video-play span { transform:scale(1.12);background:var(--accent2); }
+  .video-info { padding:24px 28px 32px; }
+  .video-info h3 { font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;margin-bottom:8px; }
+  .video-info p { font-size:13px;line-height:1.7;color:var(--muted); }
+  .video-info a { display:inline-block;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--accent);text-decoration:none;border-bottom:1px solid transparent; }
+  .video-info a:hover { border-color:var(--accent); }
 
   /* SKILLS */
-  .skills-section { background: var(--bg2); transition: background 0.4s ease; }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2px;
-  }
-
-  .skill-category {
-    background: var(--bg);
-    padding: 40px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease, background 0.4s ease;
-  }
-
-  .skill-category.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .skill-cat-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-    transition: border-color 0.4s ease;
-  }
-
-  .skill-items {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .skill-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .skill-top {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-  }
-
-  .skill-name { color: var(--text); }
-  .skill-pct { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
-
-  .skill-bar {
-    height: 2px;
-    background: var(--border);
-    position: relative;
-    overflow: hidden;
-    transition: background 0.4s ease;
-  }
-
-  .skill-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    width: 0;
-    transition: width 1.5s ease;
-  }
-
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 16px;
-  }
-
-  .skill-chip {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 5px 12px;
-    letter-spacing: 1px;
-    transition: all 0.2s, border-color 0.4s ease;
-  }
-  .skill-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .skills-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:2px; }
+  .skill-category { background:var(--bg);padding:40px;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease; }
+  .skill-category.visible { opacity:1;transform:translateY(0); }
+  .skill-cat-title { font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border); }
+  .skill-items { display:flex;flex-direction:column;gap:14px; }
+  .skill-item { display:flex;flex-direction:column;gap:6px; }
+  .skill-top { display:flex;justify-content:space-between;font-size:13px; }
+  .skill-name { color:var(--text); }
+  .skill-pct { color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px; }
+  .skill-fill { height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width 1.5s ease; }
+  .skill-tags { display:flex;flex-wrap:wrap;gap:8px;margin-top:16px; }
+  .skill-chip { font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);border:1px solid var(--border);padding:5px 12px;letter-spacing:1px;transition:all .2s; }
+  .skill-chip:hover { border-color:var(--accent);color:var(--accent); }
 
   /* PUBLICATIONS */
-  .pub-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .pub-item {
-    background: var(--bg2);
-    padding: 32px 40px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 32px;
-    align-items: start;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease, background 0.2s ease;
-  }
-
-  .pub-item.visible { opacity: 1; transform: translateY(0); }
-  .pub-item:hover { background: var(--bg3); }
-
-  .pub-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    color: var(--border);
-    line-height: 1;
-    min-width: 60px;
-    transition: color 0.4s ease;
-  }
-
-  .pub-title {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-
-  .pub-journal {
-    font-size: 12px;
-    color: var(--accent);
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  .pub-authors {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .pub-link {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--accent);
-    text-decoration: none;
-    letter-spacing: 1px;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
-  }
-  .pub-link:hover { border-color: var(--accent); }
+  .pub-list { display:flex;flex-direction:column;gap:2px; }
+  .pub-item { background:var(--bg2);padding:32px 40px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease,background .2s; }
+  .pub-item.visible { opacity:1;transform:translateY(0); }
+  .pub-item:hover { background:var(--bg3); }
+  .pub-num { font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--border);line-height:1;min-width:60px; }
+  .pub-title { font-size:16px;font-weight:500;color:var(--text);margin-bottom:8px;line-height:1.5; }
+  .pub-journal { font-size:12px;color:var(--accent);letter-spacing:1px;margin-bottom:8px;font-family:'JetBrains Mono',monospace; }
+  .pub-authors { font-size:12px;color:var(--muted);margin-bottom:8px; }
+  .pub-link { font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);text-decoration:none;letter-spacing:1px;border-bottom:1px solid transparent; }
+  .pub-link:hover { border-color:var(--accent); }
 
   /* AWARDS */
-  .awards-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 2px;
-  }
+  .awards-grid { display:grid;grid-template-columns:repeat(5,1fr);gap:2px; }
+  .award-item { background:var(--bg);padding:32px 24px;text-align:center;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease,background .3s; }
+  .award-item.visible { opacity:1;transform:translateY(0); }
+  .award-item:hover { background:var(--bg3); }
+  .award-icon { font-size:28px;margin-bottom:12px;display:block; }
+  .award-title { font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:var(--accent);margin-bottom:8px; }
+  .award-event { font-size:11px;color:var(--muted);line-height:1.5; }
+  .award-year { font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;display:block;opacity:.6; }
 
-  .award-item {
-    background: var(--bg2);
-    padding: 32px 24px;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s ease;
-  }
-
-  .award-item.visible { opacity: 1; transform: translateY(0); }
-  .award-item:hover { background: var(--bg3); }
-
-  .award-icon {
-    font-size: 28px;
-    margin-bottom: 12px;
-    display: block;
-  }
-
-  .award-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    letter-spacing: 1px;
-    color: var(--accent);
-    margin-bottom: 8px;
-  }
-
-  .award-event {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  .award-year {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--border);
-    margin-top: 8px;
-    display: block;
-    transition: color 0.4s ease;
-  }
+  /* CLIENTS */
+  .clients-note { font-size:14px;color:var(--muted);letter-spacing:1px;margin-bottom:48px;font-family:'JetBrains Mono',monospace; }
+  .clients-marquee-wrap { position:relative;overflow:hidden;margin-bottom:2px;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); }
+  .clients-track { display:flex;gap:2px;width:max-content;animation:marqueeLeft 40s linear infinite; }
+  .clients-track.reverse { animation:marqueeRight 45s linear infinite; }
+  @keyframes marqueeLeft { to { transform:translateX(-50%); } }
+  @keyframes marqueeRight { from { transform:translateX(-50%); } to { transform:translateX(0); } }
+  .clients-marquee-wrap:hover .clients-track { animation-play-state:paused; }
+  .client-card { background:var(--bg2);border:1px solid var(--border);padding:20px 24px;display:flex;flex-direction:column;gap:6px;min-width:210px;flex-shrink:0;position:relative;overflow:hidden;transition:all .3s; }
+  .client-card::after { content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s; }
+  .client-card:hover { background:var(--bg3);border-color:rgba(232,108,47,.4);transform:translateY(-3px); }
+  .client-card:hover::after { transform:scaleX(1); }
+  .client-name { font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--text);white-space:nowrap; }
+  .client-type { font-size:9px;color:var(--muted);letter-spacing:1px;font-family:'JetBrains Mono',monospace;white-space:nowrap; }
+  .counter-row { display:flex;justify-content:center;gap:60px;margin-top:60px;padding-top:48px;border-top:1px solid var(--border);flex-wrap:wrap; }
+  .counter { text-align:center; }
+  .counter-num { font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--accent);line-height:1; }
+  .counter-label { font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-top:4px; }
 
   /* CONTACT */
-  .contact-section {
-    background: var(--bg);
-    position: relative;
-    overflow: hidden;
-    transition: background 0.4s ease;
-  }
+  .contact-section { background:var(--bg);overflow:hidden; }
+  .contact-section::before { content:'CONTACT';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:300px;color:var(--bg2);opacity:.2;bottom:-80px;right:-40px;letter-spacing:10px;pointer-events:none;line-height:1; }
+  .contact-grid { display:grid;grid-template-columns:1.2fr .8fr;gap:80px;align-items:start;position:relative; }
+  .contact-info h3 { font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:3px;line-height:1.1;margin-bottom:24px; }
+  .contact-info h3 span { color:var(--accent); }
+  .contact-info p { font-size:15px;line-height:1.8;color:var(--muted);margin-bottom:32px; }
+  .contact-cv { margin-bottom:32px; }
+  .contact-items { display:grid;grid-template-columns:repeat(2,1fr);gap:16px; }
+  .contact-item { display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--bg2);border:1px solid var(--border);text-decoration:none;transition:all .2s;color:var(--text);min-width:0; }
+  .contact-item:hover { border-color:var(--accent); }
+  .contact-icon { font-size:18px;width:20px;text-align:center;flex-shrink:0; }
+  .contact-detail { display:flex;flex-direction:column;gap:2px;min-width:0; }
+  .contact-label { font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'JetBrains Mono',monospace; }
+  .contact-value { font-size:13px;overflow-wrap:anywhere; }
+  .references-clean-box { background:var(--bg2);border:1px solid var(--border);padding:40px; }
+  .references-clean-box h4 { font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--text);letter-spacing:2px;margin-bottom:24px;font-weight:400; }
+  .references-clean-box p { font-size:14px;color:var(--muted);line-height:2; }
+  .references-clean-box strong { color:var(--text);font-weight:500; }
 
-  .contact-section::before {
-    content: 'CONTACT';
-    position: absolute;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 300px;
-    color: var(--bg2);
-    opacity: 0.2;
-    bottom: -80px;
-    right: -40px;
-    letter-spacing: 10px;
-    pointer-events: none;
-    line-height: 1;
-    transition: color 0.4s ease;
-  }
+  footer { background:var(--bg2);padding:32px 60px;display:flex;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--border); }
+  .footer-logo { font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--muted); }
+  .footer-text { font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:1px; }
 
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 80px;
-    align-items: start;
-  }
+  .reveal { opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease; }
+  .reveal.visible { opacity:1;transform:translateY(0); }
 
-  .contact-info h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    letter-spacing: 3px;
-    line-height: 1.1;
-    margin-bottom: 24px;
+  @media (max-width:1180px) { .nav-links { display:none; } }
+  @media (max-width:1024px) {
+    nav { padding:14px 20px; }
+    section { padding:80px 30px; }
+    .hero { grid-template-columns:1fr; }
+    .hero-left { padding:120px 30px 60px; }
+    .hero-right,.scroll-indicator { display:none; }
+    .about-grid,.contact-grid,.split-2 { grid-template-columns:1fr;gap:40px; }
+    .projects-grid,.videos-grid,.skills-grid { grid-template-columns:1fr; }
+    .project-card-wide,.project-card-full { grid-column:span 1; }
+    .module-grid { grid-template-columns:repeat(2,1fr); }
+    .awards-grid { grid-template-columns:repeat(3,1fr); }
+    .contact-items { grid-template-columns:1fr; }
+    footer { flex-direction:column;text-align:center; }
   }
-
-  .contact-info p {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--muted);
-    margin-bottom: 40px;
+  @media (max-width:600px) {
+    section { padding:64px 20px; }
+    .nav-logo { display:none; }
+    .cv-btn { padding:8px 12px; }
+    .hero-stats { grid-template-columns:1fr; }
+    .module-grid { grid-template-columns:1fr; }
+    .awards-grid { grid-template-columns:repeat(2,1fr); }
+    .pub-item { grid-template-columns:1fr;gap:12px;padding:24px; }
+    .skill-category { padding:28px 22px; }
+    .section-header { flex-wrap:wrap;margin-bottom:40px; }
+    .contact-info h3 { font-size:38px; }
+    .references-clean-box { padding:28px 22px; }
   }
-
-  .contact-items {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    text-decoration: none;
-    transition: all 0.2s, background 0.4s ease, border-color 0.4s ease;
-    color: var(--text);
-  }
-  .contact-item:hover { border-color: var(--accent); }
-
-  .contact-icon {
-    font-size: 18px;
-    width: 20px;
-    text-align: center;
-  }
-
-  .contact-detail {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .contact-label {
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-  }
-
-  /* .contact-value {
-    font-size: 14px;
-    color: var(--text);
-  } */
-  .contact-value {
-    text-decoration: none; /* Removes the default hyperlink underline */
-    color: inherit;       /* Keeps the same text color as before */
-  }
-  
-  .contact-value:hover {
-    color: var(--accent); /* Optional: changes color when hovered to show it is clickable */
-  }
-
-  .references-clean-box {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 40px;
-    transition: background 0.4s ease, border-color 0.4s ease;
-  }
-
-  /* FOOTER */
-  footer {
-    background: var(--bg2);
-    padding: 32px 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid var(--border);
-    transition: background 0.4s ease, border-top 0.4s ease;
-  }
-
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 3px;
-    color: var(--muted);
-  }
-
-  .footer-text {
-    font-size: 11px;
-    color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-  }
-
-  /* Scroll reveal */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* CLIENTS SECTION */
-  .clients-marquee-wrap {
-    position: relative;
-    mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
-    -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
-  }
-  .clients-track {
-    display: flex;
-    gap: 2px;
-    width: max-content;
-    animation: marqueeLeft 35s linear infinite;
-  }
-  .clients-track.reverse {
-    animation: marqueeRight 40s linear infinite;
-  }
-  @keyframes marqueeLeft {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @keyframes marqueeRight {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
-  }
-  .clients-marquee-wrap:hover .clients-track { animation-play-state: paused; }
-
-  .client-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    min-width: 210px;
-    max-width: 250px;
-    transition: all 0.3s, background 0.4s ease, border-color 0.4s ease;
-    flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-    cursor: default;
-  }
-  .client-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s;
-  }
-  .client-card:hover { background: var(--bg3); border-color: rgba(232,108,47,0.4); transform: translateY(-3px); }
-  .client-card:hover::after { transform: scaleX(1); }
-
-  .client-logo-wrap {
-    width: 64px; height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    background: transparent;
-  }
-  .client-logo-wrap img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    filter: var(--invert-marquee);
-    opacity: 0.75;
-    transition: opacity 0.3s, filter 0.4s ease;
-  }
-  .client-card:hover .client-logo-wrap img { opacity: 1; }
-
-  .client-fallback {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 14px;
-    letter-spacing: 2px;
-    color: var(--accent);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    line-height: 1.2;
-  }
-  .client-info { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  .client-name { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; }
-  .client-type { font-size: 9px; color: var(--muted); letter-spacing: 1px; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
-
-  /* Responsive */
-  @media (max-width: 1024px) {
-    nav { padding: 20px 30px; }
-    section { padding: 80px 30px; }
-    .hero { grid-template-columns: 1fr; }
-    .hero-left { padding: 120px 30px 60px; }
-    .hero-right { display: none; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .project-card-wide { grid-column: span 1; }
-    .skills-grid { grid-template-columns: 1fr; }
-    .awards-grid { grid-template-columns: repeat(3, 1fr); }
-    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
-    .contact-items { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 12px; text-align: center; }
-  }
+  @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important; } }
 </style>
 </head>
 <body>
@@ -1293,204 +331,128 @@
   <div class="nav-left">
     <div class="nav-logo">E·REFAIE</div>
     <div class="theme-toggle-wrap">
-      <input type="checkbox" id="theme-toggle-input" class="theme-toggle-cb">
+      <input type="checkbox" id="theme-toggle-input" class="theme-toggle-cb" aria-label="Toggle light / dark theme">
       <label for="theme-toggle-input" class="theme-toggle-label">
-        <!-- Moon Icon -->
         <svg class="moon-icon" viewBox="0 0 24 24"><path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.8 3.5-8.9 8.2-9.8.5-.1 1 .2 1.2.7.2.5 0 1.1-.4 1.4-2.8 2.2-4.2 5.6-3.6 9.1.7 4.3 4.4 7.5 8.8 7.5.5 0 1 .1 1.4.3.4.3.6.8.5 1.3-.4 2.8-3.1 4.5-6 4.5z"/></svg>
-        <!-- Sun Icon -->
-        <svg class="sun-icon" viewBox="0 0 24 24"><path d="M12 4c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1s-1 .4-1 1v1c0 .6.4 1 1 1zm0 16c-.6 0-1 .4-1 1v1c0 .6.4 1 1 1s1-.4 1-1v-1c0-.6-.4-1-1-1zm8-8c0-.6-.4-1-1-1h-1c-.6 0-1 .4-1 1s.4 1 1 1h1c-.6 0max 1-.4 1-1zM4 12c0-.6-.4-1-1-1H2c-.6 0-1 .4-1 1s.4 1 1 1h1c-.6 0 1-.4 1-1zm13.7-5.7c.4.4 1 .4 1.4 0l.7-.7c.4-.4.4-1 0-1.4s-1-.4-1.4 0l-.7.7c-.4.4-.4 1 0 1.4zm-11.4 11.4c.4.4 1 .4 1.4 0l.7-.7c.4-.4.4-1 0-1.4s-1-.4-1.4 0l-.7.7c-.4.4-.4 1 0 1.4zm0-11.4c-.4.4-.4 1 0 1.4l.7.7c.4.4 1 .4 1.4 0s.4-1 0-1.4l-.7-.7c-.4-.4-1-.4-1.4 0zm11.4 11.4c-.4.4-.4 1 0 1.4l.7.7c.4.4 1 .4 1.4 0s.4-1 0-1.4l-.7-.7c-.4-.4-1-.4-1.4 0zM12 6c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6z"/></svg>
+        <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="stroke:inherit"/></svg>
         <div class="inner-ball"></div>
       </label>
     </div>
+    <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language / Dil değiştir">
+      <span data-l="en" class="on">EN</span><span data-l="tr">TR</span>
+    </button>
   </div>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#publications">Publications</a></li>
-    <li><a href="#clients">Clients</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about" data-i18n="nav.about">About</a></li>
+    <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+    <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+    <li><a href="#videos" data-i18n="nav.videos">Videos</a></li>
+    <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+    <li><a href="#publications" data-i18n="nav.publications">Publications</a></li>
+    <li><a href="#clients" data-i18n="nav.clients">Clients</a></li>
+    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
+  <div class="nav-right">
+    <a class="cv-btn" id="cvBtnNav" href="Elbaraa_Refaie_CV.pdf" download>
+      <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>
+      <span data-i18n="cv.btn">Download CV</span>
+    </a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-left">
-    <div class="hero-tag">// Senior Automation Engineer</div>
+    <div class="hero-tag" data-i18n="hero.tag">Senior Automation Engineer</div>
     <h1 class="hero-name">ELBARAA<br><span>REFAIE</span></h1>
-    <div class="hero-title">Packaging & EOL Systems</div>
-    <p class="hero-desc">
-      Welcome! I'm Elbaraa, an Automation Engineer focused on industrial automation and motion control. From programming advanced PLCs to integrating custom AI tools for machine operators, I design reliable technical solutions for modern manufacturing.
-      Schneider PacDrive specialist with end-to-end ownership of 100+ EOL packaging machines across 6 countries. Building the future of industrial automation — one machine at a time.
+    <div class="hero-title" data-i18n="hero.title">Packaging & EOL Systems</div>
+    <p class="hero-desc" data-i18n="hero.desc">
+      Welcome! I'm Elbaraa, an automation engineer and software department lead focused on industrial automation and motion control. From advanced PLC programming to machine HMIs with built-in production intelligence, I design reliable technical solutions for modern manufacturing. Schneider PacDrive specialist with end-to-end ownership of 100+ EOL packaging machines across 6 countries.
     </p>
     <div class="hero-stats">
-      <div class="stat-box">
-        <div class="stat-num">100+</div>
-        <div class="stat-label">Machines Commissioned</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">550</div>
-        <div class="stat-label">PPM Peak Throughput</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">6</div>
-        <div class="stat-label">Countries Deployed</div>
-      </div>
+      <div class="stat-box"><div class="stat-num">100+</div><div class="stat-label" data-i18n="hero.stat1">Machines Commissioned</div></div>
+      <div class="stat-box"><div class="stat-num">650</div><div class="stat-label" data-i18n="hero.stat2">PPM Peak Throughput</div></div>
+      <div class="stat-box"><div class="stat-num">6</div><div class="stat-label" data-i18n="hero.stat3">Countries Deployed</div></div>
     </div>
     <div class="hero-cta">
-      <a href="#projects" class="btn-primary">View Projects</a>
-      <a href="#contact" class="btn-outline">Get In Touch</a>
+      <a href="#projects" class="btn-primary" data-i18n="hero.cta1">View Projects</a>
+      <a href="Elbaraa_Refaie_CV.pdf" download id="cvBtnHero" class="btn-outline">
+        <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>
+        <span data-i18n="cv.btn">Download CV</span>
+      </a>
+      <a href="#contact" class="btn-outline" data-i18n="hero.cta2">Get In Touch</a>
     </div>
   </div>
 
   <div class="hero-right">
     <div class="hero-visual">
-      <svg class="gear-svg" width="500" height="500" viewBox="0 0 500 500">
+      <svg class="gear-svg" width="500" height="500" viewBox="0 0 500 500" aria-hidden="true">
         <g transform="translate(250,250)">
           <g class="rotating-slow">
-            <circle r="180" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+            <circle r="180" fill="none" stroke="var(--border)" stroke-width="1"/>
             <circle r="200" fill="none" stroke="#e86c2f" stroke-width="0.5" stroke-dasharray="4 8"/>
-            <g>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(30)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(60)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(90)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(120)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(150)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(180)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(210)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(240)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(270)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(300)"/>
-              <rect x="-8" y="-208" width="16" height="20" fill="#1a1a1a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(330)"/>
-            </g>
+            <g id="teeth1"></g>
           </g>
           <g class="rotating-medium">
-            <circle r="110" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-            <circle r="120" fill="none" stroke="#2a2a2a" stroke-width="0.5" stroke-dasharray="3 6"/>
-            <g>
-              <rect x="-6" y="-126" width="12" height="16" fill="#111111" stroke="#333" stroke-width="0.5" rx="1"/>
-              <rect x="-6" y="-126" width="12" height="16" fill="#111111" stroke="#333" stroke-width="0.5" rx="1" transform="rotate(45)"/>
-              <rect x="-6" y="-126" width="12" height="16" fill="#111111" stroke="#333" stroke-width="0.5" rx="1" transform="rotate(90)"/>
-              <rect x="-6" y="-126" width="12" height="16" fill="#111111" stroke="#333" stroke-width="0.5" rx="1" transform="rotate(135)"/>
-              <rect x="-6" y="-126" width="12" height="16" fill="#111111" stroke="#333" stroke-width="0.5" rx="1" transform="rotate(180)"/>
-              <rect x="-6" y="-126" width="12" height="16" fill="#111111" stroke="#333" stroke-width="0.5" rx="1" transform="rotate(225)"/>
-              <rect x="-6" y="-126" width="12" height="16" fill="#111111" stroke="#333" stroke-width="0.5" rx="1" transform="rotate(270)"/>
-              <rect x="-6" y="-126" width="12" height="16" fill="#111111" stroke="#333" stroke-width="0.5" rx="1" transform="rotate(315)"/>
-            </g>
+            <circle r="110" fill="none" stroke="var(--border)" stroke-width="1"/>
+            <circle r="120" fill="none" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="3 6"/>
+            <g id="teeth2"></g>
           </g>
           <g class="rotating-fast">
             <circle r="55" fill="none" stroke="#e86c2f" stroke-width="0.5"/>
-            <circle r="45" fill="rgba(232,108,47,0.03)" stroke="#1a1a1a" stroke-width="1"/>
-            <g>
-              <rect x="-4" y="-62" width="8" height="12" fill="#0a0a0a" stroke="#e86c2f" stroke-width="0.5" rx="1"/>
-              <rect x="-4" y="-62" width="8" height="12" fill="#0a0a0a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(60)"/>
-              <rect x="-4" y="-62" width="8" height="12" fill="#0a0a0a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(120)"/>
-              <rect x="-4" y="-62" width="8" height="12" fill="#0a0a0a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(180)"/>
-              <rect x="-4" y="-62" width="8" height="12" fill="#0a0a0a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(240)"/>
-              <rect x="-4" y="-62" width="8" height="12" fill="#0a0a0a" stroke="#e86c2f" stroke-width="0.5" rx="1" transform="rotate(300)"/>
-            </g>
+            <circle r="45" fill="rgba(232,108,47,0.05)" stroke="var(--border)" stroke-width="1"/>
+            <g id="teeth3"></g>
             <circle r="12" fill="#e86c2f" opacity="0.8"/>
-            <circle r="6" fill="#0a0a0a"/>
+            <circle r="6" fill="var(--bg)"/>
           </g>
-          <line x1="-220" y1="0" x2="220" y2="0" stroke="#1a1a1a" stroke-width="0.5"/>
-          <line x1="0" y1="-220" x2="0" y2="220" stroke="#1a1a1a" stroke-width="0.5"/>
-          <circle cx="0" cy="-180" r="3" fill="var(--accent)" opacity="0.8"/>
-          <circle cx="180" cy="0" r="3" fill="var(--accent)" opacity="0.8"/>
-          <circle cx="-130" cy="130" r="3" fill="var(--accent2)" opacity="0.8"/>
+          <line x1="-220" y1="0" x2="220" y2="0" stroke="var(--border)" stroke-width="0.5"/>
+          <line x1="0" y1="-220" x2="0" y2="220" stroke="var(--border)" stroke-width="0.5"/>
+          <circle cx="0" cy="-180" r="3" fill="#e86c2f" opacity="0.8"/>
+          <circle cx="180" cy="0" r="3" fill="#e86c2f" opacity="0.8"/>
+          <circle cx="-130" cy="130" r="3" fill="#f5a623" opacity="0.8"/>
         </g>
       </svg>
     </div>
-
     <div class="tech-tags">
       <div class="tech-tag">PacDrive 3</div>
       <div class="tech-tag">MC12 MultiCarrier</div>
       <div class="tech-tag">IEC 61131-3</div>
       <div class="tech-tag">Servo Motion Control</div>
       <div class="tech-tag">EOL Automation</div>
-      <div class="tech-tag">550 PPM</div>
+      <div class="tech-tag">650 PPM</div>
     </div>
   </div>
 
-  <div class="scroll-indicator">
-    <div class="scroll-line"></div>
-    <span class="scroll-text">Scroll to explore</span>
-  </div>
+  <div class="scroll-indicator"><div class="scroll-line"></div><span class="scroll-text" data-i18n="hero.scroll">Scroll to explore</span></div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
   <div class="section-header">
     <span class="section-num">01</span>
-    <h2 class="section-title">ABOUT</h2>
+    <h2 class="section-title" data-i18n="nav.about">About</h2>
     <div class="section-line"></div>
   </div>
   <div class="about-grid">
     <div class="about-text reveal">
-      <p>
-        I'm a <strong>Senior Automation Engineer</strong> based in Istanbul, Turkey, specializing in the design, programming, and commissioning of End-of-Line packaging machinery. As the sole automation engineer at Vervo for Advanced Packaging, I own the full technical lifecycle of every machine we build — from software architecture to live production handover.
-      </p>
-      <p>
-        My expertise centers on the <strong>Schneider Electric PacDrive 3 ecosystem</strong> — including LMC series controllers, MC12 MultiCarrier linear motor systems, and multi-axis servo coordination. I've commissioned over <strong>100 machines</strong> for major FMCG manufacturers across 6 countries, including Ülker, Hayat Kimya, Tadım, and Indomie operations in Turkey, Germany, Saudi Arabia, Serbia, and Egypt.
-      </p>
-      <div class="highlight-block">
-        "Beyond machine programming, I architect embedded software systems — including a proprietary Production Intelligence Platform that delivers MES/SCADA-grade OEE reporting and machine state tracking natively from the machine IPC, at zero external software cost."
-      </div>
-      <div class="highlight-block">
-        " Automation & Controls Engineer specializing in industrial automation, PLC programming, and high-speed packaging machinery. I build robust, efficient control systems that bridge the gap between complex hardware and intelligent software."
-      </div>
-      <p>
-        I hold a <strong>B.Sc. in Electrical-Mechatronics Engineering</strong> from the University of Technology Malaysia (CGPA 3.94/4.0) and have co-authored two peer-reviewed publications in machine vision and AI with Springer and IOP Publishing.
-      </p>
+      <p data-i18n="about.p1">I'm a <strong>Senior Automation Engineer</strong> based in Istanbul, Turkey, specializing in the design, programming and commissioning of End-of-Line packaging machinery. I now <strong>lead the software department</strong> at Vervo for Advanced Packaging, owning the full technical lifecycle of every machine we build — from software architecture to live production handover.</p>
+      <p data-i18n="about.p2">My expertise centers on the <strong>Schneider Electric PacDrive 3 ecosystem</strong> — LMC controllers, MC12 MultiCarrier linear motor systems and multi-axis servo coordination. I've commissioned over <strong>100 machines</strong> for major FMCG manufacturers across 6 countries, including Ülker, Hayat Kimya, Tadım and Indomie, with machine speeds of up to <strong>650 PPM</strong>.</p>
+      <div class="highlight-block" data-i18n="about.q1">"Beyond machine programming, I architect embedded software systems — including a Production Intelligence Platform that delivers MES/SCADA-grade OEE reporting, production records and preventive-maintenance data natively from the machine HMI, at zero external software cost."</div>
+      <div class="highlight-block" data-i18n="about.q2">"Automation & controls engineer specializing in industrial automation, PLC programming and high-speed packaging machinery. I build robust, efficient control systems that bridge the gap between complex hardware and intelligent software."</div>
+      <p data-i18n="about.p3">I hold a <strong>B.Sc. in Electrical-Mechatronics Engineering</strong> from Universiti Teknologi Malaysia (CGPA 3.94/4.0) and have co-authored two peer-reviewed publications in machine vision and AI with Springer and IOP Publishing.</p>
     </div>
     <div class="about-sidebar reveal">
-      <div class="info-row">
-        <span class="info-label">Location</span>
-        <span class="info-value">Istanbul, Turkey</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Nationality</span>
-        <span class="info-value">Egyptian</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Experience</span>
-        <span class="info-value">3+ Years</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Specialization</span>
-        <span class="info-value">EOL Packaging Automation</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Platform</span>
-        <span class="info-value">Schneider PacDrive 3</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Education</span>
-        <span class="info-value">B.Sc. Electrical-Mechatronics<br>UTM Malaysia — 3.94 GPA</span>
-      </div>
+      <div class="info-row"><span class="info-label" data-i18n="about.loc">Location</span><span class="info-value" data-i18n="about.locv">Istanbul, Turkey</span></div>
+      <div class="info-row"><span class="info-label" data-i18n="about.nat">Nationality</span><span class="info-value" data-i18n="about.natv">Egyptian</span></div>
+      <div class="info-row"><span class="info-label" data-i18n="about.exp">Experience</span><span class="info-value" data-i18n="about.expv">4+ Years</span></div>
+      <div class="info-row"><span class="info-label" data-i18n="about.role">Role</span><span class="info-value" data-i18n="about.rolev">Software Department Lead</span></div>
+      <div class="info-row"><span class="info-label" data-i18n="about.spec">Specialization</span><span class="info-value" data-i18n="about.specv">EOL Packaging Automation</span></div>
+      <div class="info-row"><span class="info-label" data-i18n="about.plat">Platform</span><span class="info-value">Schneider PacDrive 3</span></div>
+      <div class="info-row"><span class="info-label" data-i18n="about.edu">Education</span><span class="info-value" data-i18n="about.eduv">B.Sc. Electrical-Mechatronics<br>UTM Malaysia — 3.94 GPA</span></div>
       <div class="lang-bars">
-        <div class="lang-item">
-          <div class="lang-top">
-            <span class="lang-name">Arabic</span>
-            <span class="lang-level">Native</span>
-          </div>
-          <div class="lang-bar"><div class="lang-fill" data-width="100"></div></div>
-        </div>
-        <div class="lang-item">
-          <div class="lang-top">
-            <span class="lang-name">English</span>
-            <span class="lang-level">Professional — IELTS 6.5</span>
-          </div>
-          <div class="lang-bar"><div class="lang-fill" data-width="85"></div></div>
-        </div>
-        <div class="lang-item">
-          <div class="lang-top">
-            <span class="lang-name">Turkish</span>
-            <span class="lang-level">Above Average</span>
-          </div>
-          <div class="lang-bar"><div class="lang-fill" data-width="65"></div></div>
-        </div>
+        <div class="lang-item"><div class="lang-top"><span class="lang-name" data-i18n="lang.ar">Arabic</span><span class="lang-level" data-i18n="lang.arl">Native</span></div><div class="lang-bar"><div class="lang-fill" data-width="100"></div></div></div>
+        <div class="lang-item"><div class="lang-top"><span class="lang-name" data-i18n="lang.en">English</span><span class="lang-level" data-i18n="lang.enl">Professional — IELTS 6.5</span></div><div class="lang-bar"><div class="lang-fill" data-width="85"></div></div></div>
+        <div class="lang-item"><div class="lang-top"><span class="lang-name" data-i18n="lang.tr">Turkish</span><span class="lang-level" data-i18n="lang.trl">Upper-intermediate</span></div><div class="lang-bar"><div class="lang-fill" data-width="70"></div></div></div>
       </div>
     </div>
   </div>
@@ -1500,7 +462,7 @@
 <section id="experience" class="experience-section">
   <div class="section-header">
     <span class="section-num">02</span>
-    <h2 class="section-title">EXPERIENCE</h2>
+    <h2 class="section-title" data-i18n="nav.experience">Experience</h2>
     <div class="section-line"></div>
   </div>
   <div class="exp-timeline">
@@ -1509,89 +471,73 @@
       <div class="exp-dot active"></div>
       <div class="exp-meta">
         <span class="exp-company">VERVO FOR ADVANCED PACKAGING</span>
-        <span class="exp-date">NOV 2022 — PRESENT</span>
+        <span class="exp-date" data-i18n="exp1.date">NOV 2022 — PRESENT</span>
       </div>
-      <div class="exp-role">Automation Engineer</div>
-      <div class="exp-location">📍 Istanbul, Turkey · Machine Builder — End-of-Line Packaging Systems</div>
-      <p class="exp-desc">Sole automation engineer responsible for the full programming lifecycle of EOL packaging machinery — from software architecture and PLC development through FAT, site commissioning, and post-sales support.</p>
+      <div class="exp-role" data-i18n="exp1.role">Automation Engineer & Software Department Lead</div>
+      <div class="exp-location" data-i18n="exp1.loc">📍 Istanbul, Turkey · Machine Builder — End-of-Line Packaging Systems</div>
+      <p class="exp-desc" data-i18n="exp1.desc">Leading the software department and owning the full programming lifecycle of EOL packaging machinery — from software architecture and PLC development through FAT, site commissioning and post-sales support.</p>
       <ul class="exp-bullets">
-        <li>Programmed and commissioned <strong>100+ EOL packaging machines</strong> (box erectors, case packers, tray lid systems) for Ülker, Indomie TR/SA/Serbia, Tadım, Torku, Hayat Kimya, BIM, and others across 6 countries</li>
-        <li>Delivered a <strong>550 PPM tray lid line</strong> at Ülker Gebze using MC12 MultiCarrier — coordinating 16+ servo axes, 7 conveyors, 12 glue guns, Schmalz vacuum gripper, and automated reject module</li>
-        <li>Developed a proprietary <strong>Smart Infeed System</strong> merging 2–5 upstream lines (each 80 PPM) into a 400 PPM synchronized feed — eliminating the need for multiple case packers</li>
-        <li>Architected an embedded <strong>Production Intelligence Platform</strong> (PacDrive 3 ST + Jmobile IPC) delivering OEE shift reporting, machine state tracking with CSV export, and 24-hour speed historian — MES-grade capability at zero licensing cost</li>
-        <li>Developed reusable <strong>Function Block libraries</strong> including checkweigher integration (GMT-P1) — reducing PLC programming time per machine by ~25%</li>
-        <li>Maintained <strong>100–150 active support connections/year</strong> as sole after-sales technical resource across 6 countries</li>
+        <li data-i18n="exp1.b1">Now <strong>leading the software department</strong> after all senior engineers left — owning architecture, code standards and delivery for every machine, and training internal engineers, operators and after-sales staff</li>
+        <li data-i18n="exp1.b2">Programmed and commissioned <strong>100+ EOL packaging machines</strong> (box erectors, case packers, tray lid systems) for Ülker, Indomie TR/SA/Serbia, Tadım, Torku, Hayat Kimya, BIM and others across 6 countries</li>
+        <li data-i18n="exp1.b3">Raised machine speed to <strong>650 PPM</strong> on the MC12 MultiCarrier platform (from the 550 PPM tray lid line at Ülker Gebze) — 16+ servo axes, 7 conveyors, 12 glue guns, Schmalz vacuum gripper and automated reject module</li>
+        <li data-i18n="exp1.b4">Developed the control of a <strong>double-entry bar-product machine</strong> (max 30 boxes/min, 650 PPM) <strong>without the MC12 system</strong>, lowering machine cost for the customer</li>
+        <li data-i18n="exp1.b5">Developed a proprietary <strong>Smart Infeed System</strong> merging 2–5 upstream lines (80 PPM each) into one 400 PPM synchronized feed — removing the need for multiple case packers</li>
+        <li data-i18n="exp1.b6">Developed machine <strong>HMIs with detailed diagnostics</strong>: daily, hourly and shift production records with bar graphs, plus preventive-maintenance data such as total distance travelled by each axis and conveyor</li>
+        <li data-i18n="exp1.b7">Architected an embedded <strong>Production Intelligence Platform</strong> (PacDrive 3 ST + Jmobile IPC): OEE shift reporting, machine state tracking with CSV export and a 24-hour speed historian — MES-grade capability at zero licensing cost</li>
+        <li data-i18n="exp1.b8">Built reusable <strong>Function Block libraries</strong>, including checkweigher integration (GMT-P1), cutting PLC programming time per machine by ~25%</li>
+        <li data-i18n="exp1.b9">Maintain <strong>100–150 active support connections per year</strong> as the main after-sales technical resource across 6 countries</li>
       </ul>
       <div class="exp-tags">
-        <span class="exp-tag">PacDrive 3</span>
-        <span class="exp-tag">MC12 MultiCarrier</span>
-        <span class="exp-tag">IEC 61131-3</span>
-        <span class="exp-tag">Servo Motion Control</span>
-        <span class="exp-tag">Exor Jmobile</span>
-        <span class="exp-tag">FAT / SAT</span>
-        <span class="exp-tag">OEE</span>
+        <span class="exp-tag">PacDrive 3</span><span class="exp-tag">MC12 MultiCarrier</span><span class="exp-tag">IEC 61131-3</span>
+        <span class="exp-tag">Servo Motion Control</span><span class="exp-tag">Exor Jmobile</span><span class="exp-tag">FAT / SAT</span><span class="exp-tag">OEE</span>
       </div>
     </div>
 
     <div class="exp-item">
       <div class="exp-dot"></div>
       <div class="exp-meta">
-        <span class="exp-company">Centre for Robotics & Artificial Intelligence (CAIRO) UTM — Research Lab</span>
-        <span class="exp-date">MAR 2021 — JAN 2023</span>
+        <span class="exp-company">CAIRO — UTM RESEARCH LAB</span>
+        <span class="exp-date" data-i18n="exp2.date">MAR 2021 — JAN 2023</span>
       </div>
-      <div class="exp-role">Research Assistant</div>
-      <div class="exp-location">📍 Johor Bahru, Malaysia · Centre for Robotics & Artificial Intelligence</div>
+      <div class="exp-role" data-i18n="exp2.role">Research Assistant</div>
+      <div class="exp-location" data-i18n="exp2.loc">📍 Johor Bahru, Malaysia · Centre for Artificial Intelligence & Robotics</div>
       <ul class="exp-bullets">
-        <li>Co-authored <strong>2 peer-reviewed publications</strong> (IOP Publishing; Springer) in machine vision and AI-based traffic analysis</li>
-        <li>Developed computer vision systems for vehicle classification using <strong>YOLO and DeepSORT</strong></li>
-        <li>Engineered facial gesture-based computer control system for amputee accessibility</li>
+        <li data-i18n="exp2.b1">Co-authored <strong>2 peer-reviewed publications</strong> (IOP Publishing; Springer) in machine vision and AI-based traffic analysis</li>
+        <li data-i18n="exp2.b2">Developed computer vision systems for vehicle classification using <strong>YOLO and DeepSORT</strong></li>
+        <li data-i18n="exp2.b3">Engineered a facial-gesture computer control system for amputee accessibility</li>
       </ul>
-      <div class="exp-tags">
-        <span class="exp-tag">OpenCV</span>
-        <span class="exp-tag">YOLO</span>
-        <span class="exp-tag">DeepSORT</span>
-        <span class="exp-tag">Python</span>
-        <span class="exp-tag">Machine Vision</span>
-      </div>
+      <div class="exp-tags"><span class="exp-tag">OpenCV</span><span class="exp-tag">YOLO</span><span class="exp-tag">DeepSORT</span><span class="exp-tag">Python</span><span class="exp-tag">Machine Vision</span></div>
     </div>
 
     <div class="exp-item">
       <div class="exp-dot"></div>
       <div class="exp-meta">
         <span class="exp-company">TOP GLOVE CORPORATION</span>
-        <span class="exp-date">JUL 2021 — OCT 2021</span>
+        <span class="exp-date" data-i18n="exp3.date">JUL 2021 — OCT 2021</span>
       </div>
-      <div class="exp-role">Automation & Digitalization Intern</div>
-      <div class="exp-location">📍 Malaysia · World's Largest Glove Manufacturer</div>
+      <div class="exp-role" data-i18n="exp3.role">Automation & Digitalization Intern</div>
+      <div class="exp-location" data-i18n="exp3.loc">📍 Malaysia · World's Largest Glove Manufacturer</div>
       <ul class="exp-bullets">
-        <li>Implemented real-time sensor dashboards for bulk tank monitoring</li>
-        <li>Built inventory management applications using <strong>Microsoft PowerApps</strong></li>
-        <li>Collaborated with cross-functional automation teams on live production systems</li>
+        <li data-i18n="exp3.b1">Implemented real-time sensor dashboards for bulk tank monitoring</li>
+        <li data-i18n="exp3.b2">Built inventory management applications using <strong>Microsoft Power Apps</strong></li>
+        <li data-i18n="exp3.b3">Collaborated with cross-functional automation teams on live production systems</li>
       </ul>
-      <div class="exp-tags">
-        <span class="exp-tag">PowerApps</span>
-        <span class="exp-tag">Dashboard Design</span>
-        <span class="exp-tag">IoT Sensors</span>
-      </div>
+      <div class="exp-tags"><span class="exp-tag">Power Apps</span><span class="exp-tag">Dashboard Design</span><span class="exp-tag">IoT Sensors</span></div>
     </div>
 
     <div class="exp-item">
       <div class="exp-dot"></div>
       <div class="exp-meta">
         <span class="exp-company">STUDYFANS COMPANY</span>
-        <span class="exp-date">JUN 2022 — OCT 2022</span>
+        <span class="exp-date" data-i18n="exp4.date">JUN 2022 — OCT 2022</span>
       </div>
-      <div class="exp-role">Business Data Analyst</div>
-      <div class="exp-location">📍 Istanbul, Turkey</div>
+      <div class="exp-role" data-i18n="exp4.role">Business Data Analyst</div>
+      <div class="exp-location" data-i18n="exp4.loc">📍 Istanbul, Turkey</div>
       <ul class="exp-bullets">
-        <li>Automated reporting workflows using <strong>Python</strong>, reducing processing time by ~60%</li>
-        <li>Built <strong>Tableau dashboards</strong> tracking KPIs for department head visibility</li>
+        <li data-i18n="exp4.b1">Automated reporting workflows using <strong>Python</strong>, reducing processing time by ~60%</li>
+        <li data-i18n="exp4.b2">Built <strong>Tableau dashboards</strong> tracking KPIs for department head visibility</li>
       </ul>
-      <div class="exp-tags">
-        <span class="exp-tag">Python</span>
-        <span class="exp-tag">Tableau</span>
-        <span class="exp-tag">Data Analysis</span>
-      </div>
+      <div class="exp-tags"><span class="exp-tag">Python</span><span class="exp-tag">Tableau</span><span class="exp-tag">Data Analysis</span></div>
     </div>
 
   </div>
@@ -1601,7 +547,7 @@
 <section id="projects">
   <div class="section-header">
     <span class="section-num">03</span>
-    <h2 class="section-title">PROJECTS</h2>
+    <h2 class="section-title" data-i18n="nav.projects">Projects</h2>
     <div class="section-line"></div>
   </div>
   <div class="projects-grid">
@@ -1609,185 +555,121 @@
     <div class="project-card project-card-wide">
       <div>
         <span class="project-num">PROJECT_01</span>
-        <div class="project-title">HIGH-SPEED TRAY LID LINE</div>
-        <div class="project-subtitle">550 PPM · Ülker Gebze, Turkey</div>
-        <p class="project-desc">Flagship packaging machine — the most complex EOL system in the Vervo portfolio. Full PLC architecture, 16+ synchronized servo axes, and MC12 MultiCarrier linear motor technology delivering one of the fastest tray lid lines in Turkish FMCG packaging.</p>
+        <div class="project-title" data-i18n="p1.title">HIGH-SPEED TRAY LID LINE</div>
+        <div class="project-subtitle" data-i18n="p1.sub">Up to 650 PPM · MC12 MultiCarrier</div>
+        <p class="project-desc" data-i18n="p1.desc">Flagship packaging machine — the most complex EOL system in the Vervo portfolio. Full PLC architecture, 16+ synchronized servo axes and MC12 MultiCarrier linear motor technology, first delivered at 550 PPM at Ülker Gebze and since developed up to 650 PPM.</p>
         <div class="project-specs">
-          <div class="spec-row">
-            <span class="spec-key">Platform</span>
-            <span class="spec-val">Schneider PacDrive 3 · MC12 MultiCarrier · LMC Series</span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-key">Servo Axes</span>
-            <span class="spec-val">16+ fully synchronized</span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-key">Conveyors</span>
-            <span class="spec-val">7 independent zones</span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-key">Glue System</span>
-            <span class="spec-val">12 hot-melt guns, MC12 position-synchronized</span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-key">Gripper</span>
-            <span class="spec-val">Schmalz vacuum system</span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-key">Reject Module</span>
-            <span class="spec-val">Length control + overlap detection</span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-key">Speed</span>
-            <span class="spec-val" style="color:var(--accent)">550 PPM — Live at Ülker Gebze</span>
-          </div>
+          <div class="spec-row"><span class="spec-key" data-i18n="s.platform">Platform</span><span class="spec-val">Schneider PacDrive 3 · MC12 MultiCarrier · LMC Series</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="s.axes">Servo Axes</span><span class="spec-val" data-i18n="p1.axes">16+ fully synchronized</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="s.conv">Conveyors</span><span class="spec-val" data-i18n="p1.conv">7 independent zones</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="s.glue">Glue System</span><span class="spec-val" data-i18n="p1.glue">12 hot-melt guns, MC12 position-synchronized</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="s.grip">Gripper</span><span class="spec-val" data-i18n="p1.grip">Schmalz vacuum system</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="s.rej">Reject Module</span><span class="spec-val" data-i18n="p1.rej">Length control + overlap detection</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="s.speed">Speed</span><span class="spec-val hl" data-i18n="p1.speed">550 PPM live at Ülker Gebze · developed to 650 PPM</span></div>
         </div>
       </div>
-      <div class="project-footer-row">
-        <a href="https://youtu.be/dG1cL_d7W-k?si=pH7QRov9BtbwkAUk" target="_blank" class="project-btn-video">Watch Video</a>
-      </div>
+      <div class="project-footer-row"><a href="https://www.youtube.com/watch?v=dG1cL_d7W-k" target="_blank" rel="noopener" class="project-btn-video" data-i18n="watch">Watch Video</a></div>
     </div>
 
     <div class="project-card">
       <div>
         <span class="project-num">PROJECT_02</span>
-        <div class="project-title">SMART INFEED SYSTEM</div>
-        <div class="project-subtitle">400 PPM · Proprietary Technology</div>
-        <p class="project-desc">Proprietary multi-lane collation system that dynamically merges 2–5 independent upstream production lines into a single synchronized feed for one case packing machine.</p>
+        <div class="project-title" data-i18n="p2.title">SMART INFEED SYSTEM</div>
+        <div class="project-subtitle" data-i18n="p2.sub">400 PPM · Proprietary Technology</div>
+        <p class="project-desc" data-i18n="p2.desc">Proprietary multi-lane collation system that dynamically merges 2–5 independent upstream production lines into a single synchronized feed for one case packing machine.</p>
         <div class="project-specs">
-          <div class="spec-row">
-            <span class="spec-key">Max Throughput</span>
-            <span class="spec-val" style="color:var(--accent)">400 PPM (5×80)</span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-key">Lane Config</span>
-            <span class="spec-val">2 / 3 / 4 / 5 via recipe</span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-key">Sync Method</span>
-            <span class="spec-val">Real-time servo speed sync</span>
-          </div>
-          <div class="spec-row">
-            <span class="spec-key">Fault Handling</span>
-            <span class="spec-val">Partial shutdown without packer stop</span>
-          </div>
+          <div class="spec-row"><span class="spec-key" data-i18n="p2.k1">Max Throughput</span><span class="spec-val hl">400 PPM (5×80)</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="p2.k2">Lane Config</span><span class="spec-val" data-i18n="p2.v2">2 / 3 / 4 / 5 via recipe</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="p2.k3">Sync Method</span><span class="spec-val" data-i18n="p2.v3">Real-time servo speed sync</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="p2.k4">Fault Handling</span><span class="spec-val" data-i18n="p2.v4">Partial shutdown without packer stop</span></div>
         </div>
       </div>
-      <div class="project-footer-row">
-        <a href="https://m.youtube.com/watch?v=wb6kc_oGU3U" target="_blank" class="project-btn-video">Watch Video</a>
+      <div class="project-footer-row"><a href="https://www.youtube.com/watch?v=wb6kc_oGU3U" target="_blank" rel="noopener" class="project-btn-video" data-i18n="watch">Watch Video</a></div>
+    </div>
+
+    <div class="project-card project-card-full">
+      <span class="project-num">PROJECT_03</span>
+      <div class="split-2">
+        <div>
+          <div class="project-title" data-i18n="p3.title">DOUBLE-ENTRY BAR-PRODUCT MACHINE</div>
+          <div class="project-subtitle" data-i18n="p3.sub">650 PPM · 30 Boxes/min · Cost-Optimized, No MC12</div>
+          <p class="project-desc" data-i18n="p3.desc">Control system for a double-entry machine handling bar products. It reaches the same 650 PPM as MC12-based designs without the MC12 MultiCarrier system, giving customers a lower-cost machine without giving up throughput.</p>
+        </div>
+        <div class="project-specs">
+          <div class="spec-row"><span class="spec-key" data-i18n="p3.k1">Product</span><span class="spec-val" data-i18n="p3.v1">Bar products, double entry</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="p3.k2">Capacity</span><span class="spec-val hl" data-i18n="p3.v2">Max 30 boxes/min</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="p3.k3">Product Speed</span><span class="spec-val hl">650 PPM</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="p3.k4">Architecture</span><span class="spec-val" data-i18n="p3.v4">Conventional servo — no MC12</span></div>
+          <div class="spec-row"><span class="spec-key" data-i18n="p3.k5">Benefit</span><span class="spec-val" data-i18n="p3.v5">Lower machine price</span></div>
+        </div>
       </div>
     </div>
 
-    <div class="project-card" style="grid-column: span 3">
-      <span class="project-num">PROJECT_03</span>
-      <div class="project-title">EMBEDDED PRODUCTION INTELLIGENCE PLATFORM</div>
-      <div class="project-subtitle">OEE · State Tracking · Speed Historian · Zero Licensing Cost</div>
-      <p class="project-desc">A two-layer embedded platform (PacDrive 3 Structured Text logic + Exor Jmobile IPC reporting) deployed as standard across the entire Vervo machine portfolio. Delivers MES/SCADA-grade production visibility with zero external software or infrastructure dependency.</p>
-      <div style="display:grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin: 24px 0;">
-        <div style="background:var(--bg); padding:20px; border:1px solid var(--border); transition: background 0.4s ease, border-color 0.4s ease;">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px; margin-bottom:10px;">MODULE 01</div>
-          <div style="font-size:14px; font-weight:500; margin-bottom:8px;">OEE Reporting</div>
-          <div style="font-size:12px; color:var(--muted); line-height:1.7;">Shift-configurable KPI tracking. Products, rejections, boxes, stops, homing events, stop time. On-demand & scheduled PDF export from HMI.</div>
-        </div>
-        <div style="background:var(--bg); padding:20px; border:1px solid var(--border); transition: background 0.4s ease, border-color 0.4s ease;">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px; margin-bottom:10px;">MODULE 02</div>
-          <div style="font-size:14px; font-weight:500; margin-bottom:8px;">State Tracker</div>
-          <div style="font-size:12px; color:var(--muted); line-height:1.7;">Full state transition log (Auto/Stop/Reference/Fault/E-Stop). Time-in-state + production counters at each event. CSV export for remote diagnosis.</div>
-        </div>
-        <div style="background:var(--bg); padding:20px; border:1px solid var(--border); transition: background 0.4s ease, border-color 0.4s ease;">
-          <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--accent); letter-spacing:2px; margin-bottom:10px;">MODULE 03</div>
-          <div style="font-size:14px; font-weight:500; margin-bottom:8px;">Speed Historian</div>
-          <div style="font-size:12px; color:var(--muted); line-height:1.7;">24-hour rolling production speed trend at 1-second resolution — 86,400 data points/day. Natively on Jmobile IPC. No Wonderware. No FactoryTalk.</div>
-        </div>
+    <div class="project-card project-card-full">
+      <span class="project-num">PROJECT_04</span>
+      <div class="project-title" data-i18n="p4.title">HMI & PRODUCTION INTELLIGENCE PLATFORM</div>
+      <div class="project-subtitle" data-i18n="p4.sub">OEE · Diagnostics · Production Records · Preventive Maintenance</div>
+      <p class="project-desc" data-i18n="p4.desc">A two-layer embedded platform (PacDrive 3 Structured Text logic + Exor Jmobile IPC reporting) deployed as standard across the Vervo machine portfolio. Delivers MES/SCADA-grade production visibility with zero external software or infrastructure dependency.</p>
+      <div class="module-grid">
+        <div class="module"><div class="module-id">MODULE 01</div><div class="module-name" data-i18n="m1.n">OEE Reporting</div><div class="module-text" data-i18n="m1.t">Shift-configurable KPI tracking: products, rejections, boxes, stops, homing events, stop time. On-demand and scheduled PDF export from the HMI.</div></div>
+        <div class="module"><div class="module-id">MODULE 02</div><div class="module-name" data-i18n="m2.n">Production Records</div><div class="module-text" data-i18n="m2.t">Daily, hourly and shift production records with bar graphs directly on the machine HMI, alongside detailed diagnostics screens.</div></div>
+        <div class="module"><div class="module-id">MODULE 03</div><div class="module-name" data-i18n="m3.n">State Tracker & Historian</div><div class="module-text" data-i18n="m3.t">Full state-transition log with CSV export for remote diagnosis, plus a 24-hour speed trend at 1-second resolution (86,400 points/day) — natively on the Jmobile IPC.</div></div>
+        <div class="module"><div class="module-id">MODULE 04</div><div class="module-name" data-i18n="m4.n">Preventive Maintenance</div><div class="module-text" data-i18n="m4.t">Total distance travelled by each axis and conveyor, so maintenance is scheduled from real machine usage.</div></div>
       </div>
-      <span class="project-badge">Standard on All Vervo Machines</span>
+      <span class="project-badge" data-i18n="p4.badge">Standard on All Vervo Machines</span>
     </div>
 
   </div>
 </section>
 
-<!-- SKILLS -->
-<section id="skills" class="skills-section">
+<!-- VIDEOS -->
+<section id="videos" class="alt-section">
   <div class="section-header">
     <span class="section-num">04</span>
-    <h2 class="section-title">SKILLS</h2>
+    <h2 class="section-title" data-i18n="nav.videos">Videos</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="videos-grid" id="videosGrid"></div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title" data-i18n="nav.skills">Skills</h2>
     <div class="section-line"></div>
   </div>
   <div class="skills-grid">
 
-    <div class="skill-category">
-      <div class="skill-cat-title">// Automation & Control</div>
+    <div class="skill-category" style="background:var(--bg2)">
+      <div class="skill-cat-title" data-i18n="sk.c1">// Automation & Control</div>
       <div class="skill-items">
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">Schneider PacDrive 3 / LMC Series</span><span class="skill-pct">Expert</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="98"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">MC12 MultiCarrier</span><span class="skill-pct">Advanced</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">IEC 61131-3 Structured Text</span><span class="skill-pct">Expert</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">Multi-Axis Servo Motion Control</span><span class="skill-pct">Advanced</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">HMI Development (Exor Jmobile)</span><span class="skill-pct">Advanced</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">FAT / SAT / Machine Commissioning</span><span class="skill-pct">Expert</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
-        </div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name">Schneider PacDrive 3 / LMC Series</span><span class="skill-pct" data-i18n="lv.expert">Expert</span></div><div class="skill-bar"><div class="skill-fill" data-width="98"></div></div></div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name">MC12 MultiCarrier</span><span class="skill-pct" data-i18n="lv.adv">Advanced</span></div><div class="skill-bar"><div class="skill-fill" data-width="90"></div></div></div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name">IEC 61131-3 Structured Text</span><span class="skill-pct" data-i18n="lv.expert">Expert</span></div><div class="skill-bar"><div class="skill-fill" data-width="95"></div></div></div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name" data-i18n="sk.servo">Multi-Axis Servo Motion Control</span><span class="skill-pct" data-i18n="lv.adv">Advanced</span></div><div class="skill-bar"><div class="skill-fill" data-width="88"></div></div></div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name" data-i18n="sk.hmi">HMI Development (Exor Jmobile)</span><span class="skill-pct" data-i18n="lv.adv">Advanced</span></div><div class="skill-bar"><div class="skill-fill" data-width="88"></div></div></div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name" data-i18n="sk.fat">FAT / SAT / Machine Commissioning</span><span class="skill-pct" data-i18n="lv.expert">Expert</span></div><div class="skill-bar"><div class="skill-fill" data-width="95"></div></div></div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name" data-i18n="sk.lead">Software Team Leadership</span><span class="skill-pct" data-i18n="lv.adv">Advanced</span></div><div class="skill-bar"><div class="skill-fill" data-width="80"></div></div></div>
       </div>
       <div class="skill-tags" style="margin-top:24px;">
-        <span class="skill-chip">EcoStruxure Machine Expert</span>
-        <span class="skill-chip">CANopen</span>
-        <span class="skill-chip">EtherCAT</span>
-        <span class="skill-chip">Modbus TCP</span>
-        <span class="skill-chip">OEE Monitoring</span>
-        <span class="skill-chip">EOL Automation</span>
-        <span class="skill-chip">Function Blocks</span>
-        <span class="skill-chip">SCADA Concepts</span>
-        <span class="skill-chip">OPC-UA</span>
+        <span class="skill-chip">EcoStruxure Machine Expert</span><span class="skill-chip">CANopen</span><span class="skill-chip">EtherCAT</span><span class="skill-chip">Modbus TCP</span>
+        <span class="skill-chip">OEE Monitoring</span><span class="skill-chip">EOL Automation</span><span class="skill-chip">Function Blocks</span><span class="skill-chip">SCADA Concepts</span><span class="skill-chip">OPC-UA</span>
       </div>
     </div>
 
-    <div class="skill-category">
-      <div class="skill-cat-title">// Programming & Software</div>
+    <div class="skill-category" style="background:var(--bg2)">
+      <div class="skill-cat-title" data-i18n="sk.c2">// Programming & Software</div>
       <div class="skill-items">
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">Python</span><span class="skill-pct">Advanced</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">Embedded C/C++</span><span class="skill-pct">Proficient</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">OpenCV / YOLO / Computer Vision</span><span class="skill-pct">Proficient</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-top"><span class="skill-name">SolidWorks</span><span class="skill-pct">Intermediate</span></div>
-          <div class="skill-bar"><div class="skill-fill" data-width="60"></div></div>
-        </div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name">Python</span><span class="skill-pct" data-i18n="lv.adv">Advanced</span></div><div class="skill-bar"><div class="skill-fill" data-width="80"></div></div></div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name">Embedded C/C++</span><span class="skill-pct" data-i18n="lv.prof">Proficient</span></div><div class="skill-bar"><div class="skill-fill" data-width="75"></div></div></div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name">OpenCV / YOLO / Computer Vision</span><span class="skill-pct" data-i18n="lv.prof">Proficient</span></div><div class="skill-bar"><div class="skill-fill" data-width="70"></div></div></div>
+        <div class="skill-item"><div class="skill-top"><span class="skill-name">SolidWorks</span><span class="skill-pct" data-i18n="lv.inter">Intermediate</span></div><div class="skill-bar"><div class="skill-fill" data-width="60"></div></div></div>
       </div>
-      <div class="skill-cat-title" style="margin-top:32px;">// Hardware & Embedded</div>
+      <div class="skill-cat-title" style="margin-top:32px;" data-i18n="sk.c3">// Hardware & Embedded</div>
       <div class="skill-tags">
-        <span class="skill-chip">ARM STM32</span>
-        <span class="skill-chip">Arduino</span>
-        <span class="skill-chip">PIC</span>
-        <span class="skill-chip">ATmega</span>
-        <span class="skill-chip">UART/I2C/SPI/CAN</span>
-        <span class="skill-chip">Altium Designer</span>
-        <span class="skill-chip">PCB Design</span>
-        <span class="skill-chip">Multisim</span>
-        <span class="skill-chip">Tableau</span>
-        <span class="skill-chip">PowerApps</span>
+        <span class="skill-chip">ARM STM32</span><span class="skill-chip">Arduino</span><span class="skill-chip">PIC</span><span class="skill-chip">ATmega</span><span class="skill-chip">UART/I2C/SPI/CAN</span>
+        <span class="skill-chip">Altium Designer</span><span class="skill-chip">PCB Design</span><span class="skill-chip">Multisim</span><span class="skill-chip">Tableau</span><span class="skill-chip">Power Apps</span>
       </div>
     </div>
 
@@ -1797,436 +679,343 @@
 <!-- PUBLICATIONS -->
 <section id="publications">
   <div class="section-header">
-    <span class="section-num">05</span>
-    <h2 class="section-title">PUBLICATIONS</h2>
+    <span class="section-num">06</span>
+    <h2 class="section-title" data-i18n="nav.publications">Publications</h2>
     <div class="section-line"></div>
   </div>
   <div class="pub-list">
-
     <div class="pub-item">
       <div class="pub-num">01</div>
       <div>
         <div class="pub-title">Machine Vision-Based System for Vehicle Classification and Counting Using YOLO</div>
         <div class="pub-journal">Springer · Computational Intelligence in Machine Learning · 2022</div>
         <div class="pub-authors">Refaie, E., & Faudzi, A. A. M.</div>
-        <a href="https://doi.org/10.1007/978-981-16-8484-5_37" target="_blank" class="pub-link">DOI: 10.1007/978-981-16-8484-5_37 →</a>
+        <a href="https://doi.org/10.1007/978-981-16-8484-5_37" target="_blank" rel="noopener" class="pub-link">DOI: 10.1007/978-981-16-8484-5_37 →</a>
       </div>
     </div>
-
     <div class="pub-item">
       <div class="pub-num">02</div>
       <div>
         <div class="pub-title">Data Analytics for Traffic Flow Prediction Using Long Short-Term Memory (LSTM) Networks</div>
         <div class="pub-journal">IOP Publishing · Journal of Physics: Conference Series · Vol. 2107 · 2021</div>
         <div class="pub-authors">Loon, Lee Pin; Refaie, E.; Faudzi, A. A. M.</div>
-        <a href="https://doi.org/10.1088/1742-6596/2107/1/012006" target="_blank" class="pub-link">DOI: 10.1088/1742-6596/2107/1/012006 →</a>
+        <a href="https://doi.org/10.1088/1742-6596/2107/1/012006" target="_blank" rel="noopener" class="pub-link">DOI: 10.1088/1742-6596/2107/1/012006 →</a>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- AWARDS -->
-<section style="background:var(--bg2); padding: 80px 60px; transition: background 0.4s ease;">
+<section class="alt-section" style="padding:80px 60px;">
   <div class="section-header">
-    <span class="section-num">06</span>
-    <h2 class="section-title">AWARDS</h2>
+    <span class="section-num">07</span>
+    <h2 class="section-title" data-i18n="nav.awards">Awards</h2>
     <div class="section-line"></div>
   </div>
   <div class="awards-grid">
-    <div class="award-item">
-      <span class="award-icon">🏆</span>
-      <div class="award-title">Champion</div>
-      <div class="award-event">U-ROCK Robotics Competition · UNIMAP</div>
-      <span class="award-year">2019</span>
-    </div>
-    <div class="award-item">
-      <span class="award-icon">🥉</span>
-      <div class="award-title">2nd Runner-Up</div>
-      <div class="award-event">U-ROCK Robotics Competition · UNIMAP</div>
-      <span class="award-year">2019</span>
-    </div>
-    <div class="award-item">
-      <span class="award-icon">⚙️</span>
-      <div class="award-title">Best Engineering</div>
-      <div class="award-event">Malaysia Robocon 2019 Competition</div>
-      <span class="award-year">2019</span>
-    </div>
-    <div class="award-item">
-      <span class="award-icon">🥈</span>
-      <div class="award-title">1st Runner-Up</div>
-      <div class="award-event">Malaysia Robocon 2019 Competition</div>
-      <span class="award-year">2019</span>
-    </div>
-    <div class="award-item">
-      <span class="award-icon">🤖</span>
-      <div class="award-title">1st Runner-Up</div>
-      <div class="award-event">University AI Hackathon · Industry Problem</div>
-      <span class="award-year">2020</span>
-    </div>
+    <div class="award-item"><span class="award-icon">🏆</span><div class="award-title" data-i18n="aw1.t">Champion</div><div class="award-event" data-i18n="aw1.e">U-ROCK Robotics Competition · UNIMAP</div><span class="award-year">2019</span></div>
+    <div class="award-item"><span class="award-icon">🥉</span><div class="award-title" data-i18n="aw2.t">2nd Runner-Up</div><div class="award-event" data-i18n="aw1.e">U-ROCK Robotics Competition · UNIMAP</div><span class="award-year">2019</span></div>
+    <div class="award-item"><span class="award-icon">⚙️</span><div class="award-title" data-i18n="aw3.t">Best Engineering</div><div class="award-event" data-i18n="aw3.e">Malaysia Robocon 2019 Competition</div><span class="award-year">2019</span></div>
+    <div class="award-item"><span class="award-icon">🥈</span><div class="award-title" data-i18n="aw4.t">1st Runner-Up</div><div class="award-event" data-i18n="aw3.e">Malaysia Robocon 2019 Competition</div><span class="award-year">2019</span></div>
+    <div class="award-item"><span class="award-icon">🤖</span><div class="award-title" data-i18n="aw4.t">1st Runner-Up</div><div class="award-event" data-i18n="aw5.e">University AI Hackathon · Industry Problem</div><span class="award-year">2020</span></div>
   </div>
 </section>
 
 <!-- CLIENTS -->
-<section id="clients" style="background:var(--bg); padding: 80px 60px; overflow:hidden; transition: background 0.4s ease;">
+<section id="clients" style="overflow:hidden;padding:80px 60px;">
   <div class="section-header">
-    <span class="section-num">07</span>
-    <h2 class="section-title">CLIENTS</h2>
+    <span class="section-num">08</span>
+    <h2 class="section-title" data-i18n="nav.clients">Clients</h2>
     <div class="section-line"></div>
   </div>
-  <p style="font-size:14px; color:var(--muted); letter-spacing:1px; margin-bottom:48px; font-family:'JetBrains Mono',monospace;">
-    // Machines commissioned and actively supported across these FMCG manufacturers
-  </p>
-
-  <!-- Marquee row 1 -->
-  <div class="clients-marquee-wrap" style="overflow:hidden; margin-bottom:2px;">
-    <div class="clients-track" id="track1">
-      <div class="client-card" data-name="BİM">
-        <div class="client-logo-wrap">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BIM_logo.svg/320px-BIM_logo.svg.png" alt="BIM" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">BİM</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">BİM</span>
-          <span class="client-type">Retail FMCG · Turkey</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Ülker">
-        <div class="client-logo-wrap">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Ulker_logo.svg/320px-Ulker_logo.svg.png" alt="Ülker" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">ÜLKER</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Ülker</span>
-          <span class="client-type">Confectionery · Turkey</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Indomie">
-        <div class="client-logo-wrap">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Indomie_logo.svg/320px-Indomie_logo.svg.png" alt="Indomie" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">INDOMIE</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Indomie</span>
-          <span class="client-type">Noodles · TR / SA / Serbia</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Tadım">
-        <div class="client-logo-wrap">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Tadim_logo.png/320px-Tadim_logo.png" alt="Tadım" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">TADIM</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Tadım</span>
-          <span class="client-type">Snacks · Turkey & Germany</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Hayat Kimya">
-        <div class="client-logo-wrap">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Hayat_Kimya_logo.png/320px-Hayat_Kimya_logo.png" alt="Hayat Kimya" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">HAYAT KİMYA</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Hayat Kimya</span>
-          <span class="client-type">Personal Care · Turkey</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Torku">
-        <div class="client-logo-wrap">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Torku_logo.png/320px-Torku_logo.png" alt="Torku" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">TORKU</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Torku</span>
-          <span class="client-type">Food & Beverages · Turkey</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Kahve Dünyası">
-        <div class="client-logo-wrap">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Kahve_Dunyasi_logo.png/320px-Kahve_Dunyasi_logo.png" alt="Kahve Dünyası" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">KAHVE DÜNYASI</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Kahve Dünyası</span>
-          <span class="client-type">Coffee & Confectionery</span>
-        </div>
-      </div>
-
-      <!-- Loops -->
-      <div class="client-card" data-name="BİM"><div class="client-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BIM_logo.svg/320px-BIM_logo.svg.png" alt="BIM" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><div class="client-fallback" style="display:none">BİM</div></div><div class="client-info"><span class="client-name">BİM</span><span class="client-type">Retail FMCG · Turkey</span></div></div>
-      <div class="client-card" data-name="Ülker"><div class="client-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Ulker_logo.svg/320px-Ulker_logo.svg.png" alt="Ülker" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><div class="client-fallback" style="display:none">ÜLKER</div></div><div class="client-info"><span class="client-name">Ülker</span><span class="client-type">Confectionery · Turkey</span></div></div>
-      <div class="client-card" data-name="Indomie"><div class="client-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Indomie_logo.svg/320px-Indomie_logo.svg.png" alt="Indomie" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><div class="client-fallback" style="display:none">INDOMIE</div></div><div class="client-info"><span class="client-name">Indomie</span><span class="client-type">Noodles · TR / SA / Serbia</span></div></div>
-      <div class="client-card" data-name="Tadım"><div class="client-logo-wrap"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Tadim_logo.png/320px-Tadim_logo.png" alt="Tadım" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><div class="client-fallback" style="display:none">TADIM</div></div><div class="client-info"><span class="client-name">Tadım</span><span class="client-type">Snacks · Turkey & Germany</span></div></div>
-    </div>
-  </div>
-
-  <!-- Marquee row 2 (reverse) -->
-  <div class="clients-marquee-wrap" style="overflow:hidden;">
-    <div class="clients-track reverse" id="track2">
-      <div class="client-card" data-name="Eruslu">
-        <div class="client-logo-wrap">
-          <img src="https://www.eruslu.com.tr/images/logo.png" alt="Eruslu" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">ERUSLU</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Eruslu</span>
-          <span class="client-type">Tissue & Paper · Turkey</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Meray Germany">
-        <div class="client-logo-wrap">
-          <img src="https://www.meray.de/images/logo.png" alt="Meray Germany" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">MERAY DE</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Meray Germany</span>
-          <span class="client-type">Food Products · Germany</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Bingo">
-        <div class="client-logo-wrap">
-          <img src="https://www.bingo.com.tr/images/logo.png" alt="Bingo Wet Tissues" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">BINGO</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Bingo</span>
-          <span class="client-type">Wet Tissues · Turkey</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="İpek Pamuk">
-        <div class="client-logo-wrap">
-          <img src="https://www.ipekpamuk.com.tr/images/logo.png" alt="İpek Pamuk" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">İPEK PAMUK</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">İpek Pamuk</span>
-          <span class="client-type">Tissues & Cotton · Turkey</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Yayla">
-        <div class="client-logo-wrap">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Yayla_logo.png/320px-Yayla_logo.png" alt="Yayla" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">YAYLA</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Yayla</span>
-          <span class="client-type">Food Products · Turkey</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Aktül">
-        <div class="client-logo-wrap">
-          <img src="https://www.aktul.com.tr/images/logo.png" alt="Aktül" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">AKTÜL</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Aktül</span>
-          <span class="client-type">Tissues · Turkey</span>
-        </div>
-      </div>
-
-      <div class="client-card" data-name="Mutlu Un">
-        <div class="client-logo-wrap">
-          <img src="https://www.mutluun.com.tr/images/logo.png" alt="Mutlu Un" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-          <div class="client-fallback" style="display:none">MUTLU UN</div>
-        </div>
-        <div class="client-info">
-          <span class="client-name">Mutlu Un</span>
-          <span class="client-type">Flour & Bakery · Turkey</span>
-        </div>
-      </div>
-
-      <!-- Loops -->
-      <div class="client-card"><div class="client-logo-wrap"><div class="client-fallback" style="display:flex">ERUSLU</div></div><div class="client-info"><span class="client-name">Eruslu</span><span class="client-type">Tissue & Paper · Turkey</span></div></div>
-      <div class="client-card"><div class="client-logo-wrap"><div class="client-fallback" style="display:flex">MERAY DE</div></div><div class="client-info"><span class="client-name">Meray Germany</span><span class="client-type">Food Products · Germany</span></div></div>
-      <div class="client-card"><div class="client-logo-wrap"><div class="client-fallback" style="display:flex">BINGO</div></div><div class="client-info"><span class="client-name">Bingo</span><span class="client-type">Wet Tissues · Turkey</span></div></div>
-    </div>
-  </div>
-
-  <!-- Counter -->
-  <div style="display:flex; justify-content:center; gap:60px; margin-top:60px; padding-top:48px; border-top:1px solid var(--border); transition: border-color 0.4s ease;">
-    <div style="text-align:center;">
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:52px; color:var(--accent); line-height:1;">6</div>
-      <div style="font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; font-family:'JetBrains Mono',monospace; margin-top:4px;">Countries</div>
-    </div>
-    <div style="text-align:center;">
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:52px; color:var(--accent); line-height:1;">100+</div>
-      <div style="font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; font-family:'JetBrains Mono',monospace; margin-top:4px;">Machines Delivered</div>
-    </div>
-    <div style="text-align:center;">
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:52px; color:var(--accent); line-height:1;">3+</div>
-      <div style="font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; font-family:'JetBrains Mono',monospace; margin-top:4px;">Years Active Support</div>
-    </div>
+  <p class="clients-note" data-i18n="cl.note">// Machines commissioned and actively supported for these FMCG manufacturers</p>
+  <div class="clients-marquee-wrap"><div class="clients-track" id="track1"></div></div>
+  <div class="clients-marquee-wrap"><div class="clients-track reverse" id="track2"></div></div>
+  <div class="counter-row">
+    <div class="counter"><div class="counter-num">6</div><div class="counter-label" data-i18n="cl.c1">Countries</div></div>
+    <div class="counter"><div class="counter-num">100+</div><div class="counter-label" data-i18n="cl.c2">Machines Delivered</div></div>
+    <div class="counter"><div class="counter-num">4+</div><div class="counter-label" data-i18n="cl.c3">Years Active Support</div></div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="contact-section">
   <div class="section-header">
-    <span class="section-num">08</span>
-    <h2 class="section-title">CONTACT</h2>
+    <span class="section-num">09</span>
+    <h2 class="section-title" data-i18n="nav.contact">Contact</h2>
     <div class="section-line"></div>
   </div>
   <div class="contact-grid">
     <div class="contact-info reveal">
-      <h3>LET'S BUILD<br><span style="color:var(--accent)">SOMETHING</span><br>TOGETHER</h3>
-      <p>Automation Engineer specializing in industrial automation, PLC development, and custom software tools for manufacturing machinery. If you have a moment, you can view a live breakdown of my technical projects and systems architecture. Open for consulting , and technical collaborations in industrial automation and packaging systems globally.</p>
+      <h3 data-i18n="ct.h">LET'S BUILD<br><span>SOMETHING</span><br>TOGETHER</h3>
+      <p data-i18n="ct.p">Automation engineer specializing in industrial automation, PLC development and custom software tools for manufacturing machinery. Open to consulting and technical collaborations in industrial automation and packaging systems worldwide.</p>
+      <div class="contact-cv">
+        <a class="cv-btn" id="cvBtnContact" href="Elbaraa_Refaie_CV.pdf" download>
+          <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5M4 20h16"/></svg>
+          <span data-i18n="cv.btn">Download CV</span>
+        </a>
+      </div>
       <div class="contact-items">
-        <a href="mailto:elbaraarefaie202015@gmail.com" class="contact-item">
-          <span class="contact-icon">✉</span>
-          <div class="contact-detail">
-            <span class="contact-label">Email</span>
-            <span class="contact-value">elbaraarefaie202015@gmail.com</span>
-          </div>
-        </a>
-        <a href="tel:+905072164613" class="contact-item">
-          <span class="contact-icon">📱</span>
-          <div class="contact-detail">
-            <span class="contact-label">Phone / WhatsApp</span>
-            <span class="contact-value">+90 507 216 46 13</span>
-          </div>
-        </a>
-        <a href="https://linkedin.com/in/elbaraa-refaie-417b011a9" target="_blank" rel="noopener noreferrer" class="contact-item">
-          <span class="contact-icon">💼</span>
-          <div class="contact-detail">
-            <span class="contact-label">LinkedIn</span>
-            <span class="contact-value">linkedin.com/in/elbaraa-refaie-417b011a9</span>
-          </div>
-        </a>
-        <div class="contact-item">
-          <span class="contact-icon">📍</span>
-          <div class="contact-detail">
-            <span class="contact-label">Location</span>
-            <span class="contact-value">Istanbul, Turkey </span>
-          </div>
-        </div>
+        <a href="mailto:elbaraarefaie202015@gmail.com" class="contact-item"><span class="contact-icon">✉</span><div class="contact-detail"><span class="contact-label">Email</span><span class="contact-value">elbaraarefaie202015@gmail.com</span></div></a>
+        <a href="tel:+905072164613" class="contact-item"><span class="contact-icon">📱</span><div class="contact-detail"><span class="contact-label" data-i18n="ct.phone">Phone / WhatsApp</span><span class="contact-value">+90 507 216 46 13</span></div></a>
+        <a href="https://linkedin.com/in/elbaraa-refaie-417b011a9" target="_blank" rel="noopener noreferrer" class="contact-item"><span class="contact-icon">💼</span><div class="contact-detail"><span class="contact-label">LinkedIn</span><span class="contact-value">linkedin.com/in/elbaraa-refaie-417b011a9</span></div></a>
+        <div class="contact-item"><span class="contact-icon">📍</span><div class="contact-detail"><span class="contact-label" data-i18n="about.loc">Location</span><span class="contact-value" data-i18n="about.locv">Istanbul, Turkey</span></div></div>
       </div>
     </div>
-    
     <div class="references-clean-box reveal">
-      <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--text); letter-spacing:2px; margin-bottom:24px;">PROFESSIONAL REFERENCES</div>
-      <div style="font-size:14px; color:var(--muted); line-height:2; font-family:'DM Sans', sans-serif;">
-        <strong style="color:var(--text); font-weight:500;">Baris Menderes</strong> — Vervo Development Manager<br>
-        <strong style="color:var(--text); font-weight:500;">Prof. Dr. Zaharuddin Mohamed</strong> — UTM (Academic)<br>
-        <strong style="color:var(--text); font-weight:500;">Prof. Ahmad Athif Mohd Faudzi</strong> — Centre for Robotics & Artificial Intelligence (CAIRO) Director
-      </div>
+      <h4 data-i18n="ref.h">PROFESSIONAL REFERENCES</h4>
+      <p data-i18n="ref.p">
+        <strong>Baris Menderes</strong> — Vervo Development Manager<br>
+        <strong>Prof. Dr. Zaharuddin Mohamed</strong> — UTM (Academic)<br>
+        <strong>Prof. Ahmad Athif Mohd Faudzi</strong> — Director, Centre for Artificial Intelligence & Robotics (CAIRO)
+      </p>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">ELBARAA REFAIE</div>
-  <div class="footer-text">Senior Automation Engineer · Istanbul, Turkey · 2026</div>
-  <div class="footer-text">Schneider PacDrive 3 Specialist · 100+ Machines Commissioned</div>
+  <div class="footer-text" data-i18n="ft.1">Senior Automation Engineer · Istanbul, Turkey · 2026</div>
+  <div class="footer-text" data-i18n="ft.2">Schneider PacDrive 3 Specialist · 100+ Machines Commissioned</div>
 </footer>
 
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+(function () {
+  /* ---------- CONFIG ---------- */
+  // Put the CV files next to index.html. If you later add a Turkish CV, change tr below.
+  const CV_FILES = { en: 'Elbaraa_Refaie_CV.pdf', tr: 'Elbaraa_Refaie_CV.pdf' };
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx - 6 + 'px';
-    cursor.style.top = my - 6 + 'px';
-  });
+  // Third video: replace the title/desc keys with the real description if needed.
+  const VIDEOS = [
+    { id: 'dG1cL_d7W-k', t: 'v1.t', d: 'v1.d' },
+    { id: 'wb6kc_oGU3U', t: 'v2.t', d: 'v2.d' },
+    { id: 'NyJXB1YO8Zk', t: 'v3.t', d: 'v3.d' }
+  ];
 
-  function animRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx - 18 + 'px';
-    ring.style.top = ry - 18 + 'px';
-    requestAnimationFrame(animRing);
-  }
-  animRing();
+  const CLIENTS_1 = [
+    ['BİM', { en: 'Retail FMCG · Turkey', tr: 'Perakende FMCG · Türkiye' }],
+    ['Ülker', { en: 'Confectionery · Turkey', tr: 'Şekerleme · Türkiye' }],
+    ['Indomie', { en: 'Noodles · TR / SA / Serbia', tr: 'Noodle · TR / SA / Sırbistan' }],
+    ['Tadım', { en: 'Snacks · Turkey & Germany', tr: 'Atıştırmalık · Türkiye & Almanya' }],
+    ['Hayat Kimya', { en: 'Personal Care · Turkey', tr: 'Kişisel Bakım · Türkiye' }],
+    ['Torku', { en: 'Food & Beverages · Turkey', tr: 'Gıda & İçecek · Türkiye' }],
+    ['Kahve Dünyası', { en: 'Coffee & Confectionery', tr: 'Kahve & Şekerleme' }]
+  ];
+  const CLIENTS_2 = [
+    ['Eruslu', { en: 'Tissue & Paper · Turkey', tr: 'Kağıt Ürünleri · Türkiye' }],
+    ['Meray Germany', { en: 'Food Products · Germany', tr: 'Gıda Ürünleri · Almanya' }],
+    ['Bingo', { en: 'Wet Tissues · Turkey', tr: 'Islak Mendil · Türkiye' }],
+    ['İpek Pamuk', { en: 'Tissues & Cotton · Turkey', tr: 'Mendil & Pamuk · Türkiye' }],
+    ['Yayla', { en: 'Food Products · Turkey', tr: 'Gıda Ürünleri · Türkiye' }],
+    ['Aktül', { en: 'Tissues · Turkey', tr: 'Kağıt Mendil · Türkiye' }],
+    ['Mutlu Un', { en: 'Flour & Bakery · Turkey', tr: 'Un & Unlu Mamul · Türkiye' }]
+  ];
 
-  document.querySelectorAll('a, button, .project-card, .stat-box, .theme-toggle-label').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.style.transform = 'scale(2.5)');
-    el.addEventListener('mouseleave', () => cursor.style.transform = 'scale(1)');
-  });
+  /* ---------- TURKISH TRANSLATIONS ---------- */
+  const TR = {
+    'nav.about':'Hakkımda','nav.experience':'Deneyim','nav.projects':'Projeler','nav.videos':'Videolar','nav.skills':'Yetenekler',
+    'nav.publications':'Yayınlar','nav.awards':'Ödüller','nav.clients':'Müşteriler','nav.contact':'İletişim',
+    'cv.btn':'CV İndir',
+    'hero.tag':'Kıdemli Otomasyon Mühendisi','hero.title':'Paketleme & Hat Sonu Sistemleri',
+    'hero.desc':'Merhaba! Ben Elbaraa; endüstriyel otomasyon ve hareket kontrolü alanında çalışan bir otomasyon mühendisi ve yazılım departmanı lideriyim. İleri seviye PLC programlamadan, üretim zekâsı içeren makine HMI\'larına kadar modern üretim için güvenilir teknik çözümler tasarlıyorum. 6 ülkede 100\'den fazla hat sonu paketleme makinesinin uçtan uca sorumluluğunu üstlenmiş bir Schneider PacDrive uzmanıyım.',
+    'hero.stat1':'Devreye Alınan Makine','hero.stat2':'PPM Azami Hız','hero.stat3':'Hizmet Verilen Ülke',
+    'hero.cta1':'Projeleri Gör','hero.cta2':'İletişime Geç','hero.scroll':'Keşfetmek için kaydırın',
+    'about.p1':'İstanbul merkezli bir <strong>Kıdemli Otomasyon Mühendisiyim</strong>; hat sonu paketleme makinelerinin tasarımı, programlanması ve devreye alınması konusunda uzmanım. Şu anda Vervo for Advanced Packaging\'de <strong>yazılım departmanına liderlik ediyorum</strong> ve ürettiğimiz her makinenin yazılım mimarisinden canlı üretime teslimine kadar tüm teknik sürecinden sorumluyum.',
+    'about.p2':'Uzmanlığım <strong>Schneider Electric PacDrive 3 ekosistemi</strong> etrafında şekilleniyor: LMC kontrolörler, MC12 MultiCarrier lineer motor sistemleri ve çok eksenli servo koordinasyonu. Ülker, Hayat Kimya, Tadım ve Indomie dahil 6 ülkede büyük FMCG üreticileri için <strong>100\'den fazla makineyi</strong> devreye aldım; makine hızları <strong>650 PPM</strong>\'e kadar çıkıyor.',
+    'about.q1':'"Makine programlamanın ötesinde gömülü yazılım sistemleri de tasarlıyorum — makine HMI\'ı üzerinde, harici yazılım maliyeti olmadan MES/SCADA seviyesinde OEE raporlama, üretim kayıtları ve önleyici bakım verisi sunan bir Üretim Zekâsı Platformu dahil."',
+    'about.q2':'"Endüstriyel otomasyon, PLC programlama ve yüksek hızlı paketleme makineleri konusunda uzman otomasyon ve kontrol mühendisi. Karmaşık donanım ile akıllı yazılım arasındaki boşluğu dolduran sağlam ve verimli kontrol sistemleri geliştiriyorum."',
+    'about.p3':'Malezya Teknoloji Üniversitesi\'nden (UTM) <strong>Elektrik-Mekatronik Mühendisliği lisans</strong> derecem var (CGPA 3,94/4,0) ve makine görmesi ile yapay zekâ alanında Springer ve IOP Publishing\'de yayımlanmış iki hakemli makalenin ortak yazarıyım.',
+    'about.loc':'Konum','about.locv':'İstanbul, Türkiye','about.nat':'Uyruk','about.natv':'Mısırlı','about.exp':'Deneyim','about.expv':'4+ Yıl',
+    'about.role':'Görev','about.rolev':'Yazılım Departmanı Lideri','about.spec':'Uzmanlık','about.specv':'Hat Sonu Paketleme Otomasyonu','about.plat':'Platform',
+    'about.edu':'Eğitim','about.eduv':'Elektrik-Mekatronik Müh. Lisans<br>UTM Malezya — 3,94 GPA',
+    'lang.ar':'Arapça','lang.arl':'Ana dil','lang.en':'İngilizce','lang.enl':'Profesyonel — IELTS 6.5','lang.tr':'Türkçe','lang.trl':'Orta-ileri seviye',
+    'exp1.date':'KASIM 2022 — GÜNÜMÜZ','exp1.role':'Otomasyon Mühendisi & Yazılım Departmanı Lideri',
+    'exp1.loc':'📍 İstanbul, Türkiye · Makine Üreticisi — Hat Sonu Paketleme Sistemleri',
+    'exp1.desc':'Yazılım departmanına liderlik ediyor ve hat sonu paketleme makinelerinin tüm programlama sürecini yönetiyorum: yazılım mimarisi ve PLC geliştirmeden FAT, saha devreye alma ve satış sonrası desteğe kadar.',
+    'exp1.b1':'Tüm kıdemli mühendisler ayrıldıktan sonra <strong>yazılım departmanına liderlik ediyorum</strong> — her makine için mimari, kod standartları ve teslimattan sorumluyum; ayrıca dahili mühendisleri, operatörleri ve satış sonrası ekibi eğitiyorum',
+    'exp1.b2':'Ülker, Indomie TR/SA/Sırbistan, Tadım, Torku, Hayat Kimya, BİM ve diğer müşteriler için 6 ülkede <strong>100\'den fazla hat sonu paketleme makinesini</strong> (kutu açıcı, kolileme, tray kapak sistemleri) programladım ve devreye aldım',
+    'exp1.b3':'MC12 MultiCarrier platformunda makine hızını <strong>650 PPM</strong>\'e çıkardım (Ülker Gebze\'deki 550 PPM tray kapak hattından) — 16+ servo eksen, 7 konveyör, 12 tutkal tabancası, Schmalz vakumlu tutucu ve otomatik red modülü',
+    'exp1.b4':'<strong>MC12 sistemi kullanmadan</strong> <strong>çift girişli bar ürün makinesinin</strong> (maks. 30 koli/dk, 650 PPM) kontrolünü geliştirdim; müşteri için makine maliyetini düşürdüm',
+    'exp1.b5':'2–5 üretim hattını (her biri 80 PPM) tek bir 400 PPM senkronize beslemede birleştiren özgün <strong>Akıllı Ürün Taşıma Sistemi</strong>\'ni geliştirdim — birden fazla kolileme makinesi ihtiyacını ortadan kaldırdı',
+    'exp1.b6':'<strong>Detaylı teşhis ekranlarına sahip makine HMI\'ları</strong> geliştirdim: bar grafikli günlük, saatlik ve vardiya üretim kayıtları ile her eksen ve konveyörün kat ettiği toplam mesafe gibi önleyici bakım verileri',
+    'exp1.b7':'Gömülü bir <strong>Üretim Zekâsı Platformu</strong> tasarladım (PacDrive 3 ST + Jmobile IPC): OEE vardiya raporlama, CSV dışa aktarımlı makine durum takibi ve 24 saatlik hız kayıt sistemi — lisans maliyeti olmadan MES seviyesinde yetenek',
+    'exp1.b8':'GMT-P1 çek-baskül entegrasyonu dahil yeniden kullanılabilir <strong>Function Block kütüphaneleri</strong> oluşturdum; makine başına PLC programlama süresini ~%25 azalttım',
+    'exp1.b9':'6 ülkede satış sonrası ana teknik kaynak olarak yılda <strong>100–150 aktif destek bağlantısını</strong> yürütüyorum',
+    'exp2.date':'MART 2021 — OCAK 2023','exp2.role':'Araştırma Asistanı','exp2.loc':'📍 Johor Bahru, Malezya · Yapay Zekâ ve Robotik Merkezi',
+    'exp2.b1':'Makine görmesi ve yapay zekâ tabanlı trafik analizi alanında <strong>2 hakemli yayının</strong> ortak yazarı (IOP Publishing; Springer)',
+    'exp2.b2':'<strong>YOLO ve DeepSORT</strong> ile araç sınıflandırma için bilgisayarlı görü sistemleri geliştirdim',
+    'exp2.b3':'Ampute bireylerin erişilebilirliği için yüz hareketine dayalı bilgisayar kontrol sistemi geliştirdim',
+    'exp3.date':'TEMMUZ 2021 — EKİM 2021','exp3.role':'Otomasyon ve Dijitalleşme Stajyeri','exp3.loc':'📍 Malezya · Dünyanın En Büyük Eldiven Üreticisi',
+    'exp3.b1':'Dökme tank izleme için gerçek zamanlı sensör panoları oluşturdum','exp3.b2':'<strong>Microsoft Power Apps</strong> ile envanter yönetim uygulamaları geliştirdim','exp3.b3':'Canlı üretim sistemlerinde çok disiplinli otomasyon ekipleriyle çalıştım',
+    'exp4.date':'HAZİRAN 2022 — EKİM 2022','exp4.role':'İş Veri Analisti','exp4.loc':'📍 İstanbul, Türkiye',
+    'exp4.b1':'<strong>Python</strong> ile raporlama iş akışlarını otomatikleştirerek işlem süresini ~%60 azalttım','exp4.b2':'Bölüm yöneticileri için KPI\'ları izleyen <strong>Tableau panoları</strong> oluşturdum',
+    'p1.title':'YÜKSEK HIZLI TRAY KAPAK HATTI','p1.sub':'650 PPM\'e kadar · MC12 MultiCarrier',
+    'p1.desc':'Amiral gemisi paketleme makinesi — Vervo portföyündeki en karmaşık hat sonu sistemi. Tam PLC mimarisi, 16+ senkronize servo eksen ve MC12 MultiCarrier lineer motor teknolojisi; ilk olarak Ülker Gebze\'de 550 PPM ile teslim edildi, sonrasında 650 PPM\'e kadar geliştirildi.',
+    's.platform':'Platform','s.axes':'Servo Eksen','s.conv':'Konveyör','s.glue':'Tutkal Sistemi','s.grip':'Tutucu','s.rej':'Red Modülü','s.speed':'Hız',
+    'p1.axes':'16+ tam senkronize','p1.conv':'7 bağımsız bölge','p1.glue':'12 sıcak tutkal tabancası, MC12 konum senkronlu','p1.grip':'Schmalz vakum sistemi','p1.rej':'Boy kontrolü + üst üste binme tespiti',
+    'p1.speed':'Ülker Gebze\'de 550 PPM canlı · 650 PPM\'e geliştirildi','watch':'Videoyu İzle',
+    'p2.title':'AKILLI ÜRÜN TAŞIMA SİSTEMİ','p2.sub':'400 PPM · Özgün Teknoloji',
+    'p2.desc':'2–5 bağımsız üretim hattını dinamik olarak birleştirip tek bir kolileme makinesine senkronize tek akış halinde besleyen özgün çok hatlı toplama sistemi.',
+    'p2.k1':'Azami Kapasite','p2.k2':'Hat Konfigürasyonu','p2.v2':'Reçete ile 2 / 3 / 4 / 5','p2.k3':'Senkron Yöntemi','p2.v3':'Gerçek zamanlı servo hız senkronu','p2.k4':'Arıza Yönetimi','p2.v4':'Kolileme durmadan kısmi hat kapatma',
+    'p3.title':'ÇİFT GİRİŞLİ BAR ÜRÜN MAKİNESİ','p3.sub':'650 PPM · 30 Koli/dk · Maliyet Optimizasyonlu, MC12 Yok',
+    'p3.desc':'Bar ürünler için çift girişli makine kontrol sistemi. MC12 tabanlı tasarımlarla aynı 650 PPM hıza, MC12 MultiCarrier sistemi olmadan ulaşır; müşteriye hızdan ödün vermeden daha düşük maliyetli bir makine sunar.',
+    'p3.k1':'Ürün','p3.v1':'Bar ürünler, çift giriş','p3.k2':'Kapasite','p3.v2':'Maks. 30 koli/dk','p3.k3':'Ürün Hızı','p3.k4':'Mimari','p3.v4':'Klasik servo — MC12 yok','p3.k5':'Fayda','p3.v5':'Daha düşük makine fiyatı',
+    'p4.title':'HMI & ÜRETİM ZEKÂSI PLATFORMU','p4.sub':'OEE · Teşhis · Üretim Kayıtları · Önleyici Bakım',
+    'p4.desc':'Vervo makine portföyünde standart olarak sunulan iki katmanlı gömülü platform (PacDrive 3 Structured Text mantığı + Exor Jmobile IPC raporlama). Harici yazılım veya altyapı bağımlılığı olmadan MES/SCADA seviyesinde üretim görünürlüğü sağlar.',
+    'm1.n':'OEE Raporlama','m1.t':'Vardiyaya göre ayarlanabilir KPI takibi: ürünler, redler, koliler, duruşlar, referans (homing) olayları, duruş süresi. HMI\'dan anlık ve zamanlanmış PDF dışa aktarım.',
+    'm2.n':'Üretim Kayıtları','m2.t':'Doğrudan makine HMI\'ında bar grafikli günlük, saatlik ve vardiya üretim kayıtları ve detaylı teşhis ekranları.',
+    'm3.n':'Durum Takibi & Hız Kaydı','m3.t':'Uzaktan teşhis için CSV dışa aktarımlı tam durum geçiş kaydı ve 1 saniye çözünürlükte 24 saatlik hız trendi (günde 86.400 nokta) — doğrudan Jmobile IPC üzerinde.',
+    'm4.n':'Önleyici Bakım','m4.t':'Her eksen ve konveyörün kat ettiği toplam mesafe; bakım gerçek makine kullanımına göre planlanır.',
+    'p4.badge':'Tüm Vervo Makinelerinde Standart',
+    'v1.t':'Yüksek Hızlı Tray Kapak Hattı','v1.d':'MC12 MultiCarrier tabanlı amiral gemisi tray kapak makinesi, Ülker Gebze.',
+    'v2.t':'Akıllı Ürün Taşıma Sistemi','v2.d':'Birden fazla üretim hattını tek bir kolileme makinesine senkronize eden sistem.',
+    'v3.t':'Makine Tanıtım Videosu','v3.d':'Vervo\'da geliştirdiğim makinelerden bir diğeri.',
+    'video.open':'YouTube\'da aç →','video.play':'Videoyu oynat',
+    'sk.c1':'// Otomasyon & Kontrol','sk.c2':'// Programlama & Yazılım','sk.c3':'// Donanım & Gömülü Sistemler',
+    'sk.servo':'Çok Eksenli Servo Hareket Kontrolü','sk.hmi':'HMI Geliştirme (Exor Jmobile)','sk.fat':'FAT / SAT / Makine Devreye Alma','sk.lead':'Yazılım Ekibi Liderliği',
+    'lv.expert':'Uzman','lv.adv':'İleri','lv.prof':'Yetkin','lv.inter':'Orta',
+    'aw1.t':'Şampiyon','aw1.e':'U-ROCK Robotik Yarışması · UNIMAP','aw2.t':'3.lük','aw3.t':'En İyi Mühendislik','aw3.e':'Malaysia Robocon 2019 Yarışması','aw4.t':'2.lik','aw5.e':'Üniversite Yapay Zekâ Hackathon\'u · Sanayi Problemi',
+    'cl.note':'// Bu FMCG üreticileri için devreye alınan ve aktif olarak desteklenen makineler','cl.c1':'Ülke','cl.c2':'Teslim Edilen Makine','cl.c3':'Yıl Aktif Destek',
+    'ct.h':'BİRLİKTE BİR ŞEYLER<br><span>İNŞA</span><br>EDELİM','ct.p':'Endüstriyel otomasyon, PLC geliştirme ve üretim makineleri için özel yazılım araçları konusunda uzman otomasyon mühendisi. Endüstriyel otomasyon ve paketleme sistemlerinde danışmanlık ve teknik iş birliklerine dünya genelinde açığım.',
+    'ct.phone':'Telefon / WhatsApp','ref.h':'REFERANSLAR',
+    'ref.p':'<strong>Baris Menderes</strong> — Vervo Geliştirme Müdürü<br><strong>Prof. Dr. Zaharuddin Mohamed</strong> — UTM (Akademik)<br><strong>Prof. Ahmad Athif Mohd Faudzi</strong> — Yapay Zekâ ve Robotik Merkezi (CAIRO) Direktörü',
+    'ft.1':'Kıdemli Otomasyon Mühendisi · İstanbul, Türkiye · 2026','ft.2':'Schneider PacDrive 3 Uzmanı · 100+ Makine Devreye Alındı'
+  };
 
-  // Theme Switch Logic
-  const themeToggle = document.getElementById('theme-toggle-input');
-  
-  // Initialize from localStorage if exists
-  const currentTheme = localStorage.getItem('theme') || 'dark';
-  if (currentTheme === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
-    themeToggle.checked = true;
-  }
+  const EN_VIDEO = {
+    'v1.t':'High-Speed Tray Lid Line','v1.d':'Flagship MC12 MultiCarrier tray lid machine at Ülker Gebze.',
+    'v2.t':'Smart Infeed System','v2.d':'Multi-line collation synchronizing several production lines into one case packer.',
+    'v3.t':'Machine Demo Video','v3.d':'Another machine I developed at Vervo.',
+    'video.open':'Open on YouTube →','video.play':'Play video'
+  };
 
-  themeToggle.addEventListener('change', (e) => {
-    if (e.target.checked) {
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme', 'light');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'dark');
+  /* ---------- HELPERS ---------- */
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+
+  // Gear teeth (generated, keeps markup short)
+  function teeth(id, n, w, h, y, fill, stroke) {
+    const g = document.getElementById(id); if (!g) return;
+    for (let i = 0; i < n; i++) {
+      const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      r.setAttribute('x', -w / 2); r.setAttribute('y', y); r.setAttribute('width', w); r.setAttribute('height', h);
+      r.setAttribute('rx', 1); r.setAttribute('fill', fill); r.setAttribute('stroke', stroke); r.setAttribute('stroke-width', .5);
+      r.setAttribute('transform', 'rotate(' + (360 / n) * i + ')');
+      g.appendChild(r);
     }
+  }
+  teeth('teeth1', 12, 16, 20, -208, 'var(--bg3)', '#e86c2f');
+  teeth('teeth2', 8, 12, 16, -126, 'var(--bg2)', 'var(--border)');
+  teeth('teeth3', 6, 8, 12, -62, 'var(--bg)', '#e86c2f');
+
+  /* ---------- VIDEOS ---------- */
+  const grid = $('#videosGrid');
+  VIDEOS.forEach(v => {
+    const c = document.createElement('div');
+    c.className = 'video-card';
+    c.innerHTML =
+      '<div class="video-frame" data-id="' + v.id + '">' +
+        '<img src="https://img.youtube.com/vi/' + v.id + '/hqdefault.jpg" alt="" loading="lazy">' +
+        '<button class="video-play" type="button" data-i18n-aria="video.play" aria-label="Play video"><span><svg viewBox="0 0 24 24"><path d="M5 3l16 9-16 9z"/></svg></span></button>' +
+      '</div>' +
+      '<div class="video-info"><h3 data-i18n="' + v.t + '"></h3><p data-i18n="' + v.d + '"></p>' +
+      '<a href="https://www.youtube.com/watch?v=' + v.id + '" target="_blank" rel="noopener" data-i18n="video.open"></a></div>';
+    grid.appendChild(c);
+    $('.video-play', c).addEventListener('click', () => {
+      const f = $('.video-frame', c);
+      f.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + v.id + '?autoplay=1&rel=0" title="Machine video" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    });
   });
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('visible');
-          entry.target.querySelectorAll('.skill-fill, .lang-fill').forEach(bar => {
-            bar.style.width = bar.dataset.width + '%';
-          });
-        }, i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
+  /* ---------- CLIENTS ---------- */
+  function fillTrack(id, list) {
+    const html = list.map(c => '<div class="client-card"><span class="client-name">' + c[0] + '</span><span class="client-type" data-en="' + c[1].en + '" data-tr="' + c[1].tr + '">' + c[1].en + '</span></div>').join('');
+    $('#' + id).innerHTML = html + html; // duplicated for a seamless loop
+  }
+  fillTrack('track1', CLIENTS_1);
+  fillTrack('track2', CLIENTS_2);
 
-  document.querySelectorAll('.reveal, .exp-item, .project-card, .skill-category, .pub-item, .award-item').forEach(el => {
-    observer.observe(el);
+  /* ---------- LANGUAGE ---------- */
+  Object.assign(TR, {}); // TR already complete
+  $$('[data-i18n]').forEach(el => { if (!el.dataset.en) el.dataset.en = el.innerHTML; });
+  const langBtn = $('#langToggle');
+
+  function setLang(lang) {
+    const tr = lang === 'tr';
+    document.documentElement.lang = lang;
+    $$('[data-i18n]').forEach(el => {
+      const k = el.dataset.i18n;
+      if (tr) { if (TR[k] != null) el.innerHTML = TR[k]; }
+      else if (EN_VIDEO[k] != null && !el.dataset.en) el.innerHTML = EN_VIDEO[k];
+      else el.innerHTML = el.dataset.en;
+    });
+    $$('.client-type').forEach(el => { el.textContent = tr ? el.dataset.tr : el.dataset.en; });
+    $$('[data-i18n-aria]').forEach(el => el.setAttribute('aria-label', tr ? TR[el.dataset.i18nAria] : EN_VIDEO[el.dataset.i18nAria]));
+    $$('#langToggle span').forEach(s => s.classList.toggle('on', s.dataset.l === lang));
+    ['cvBtnNav', 'cvBtnHero', 'cvBtnContact'].forEach(id => { const a = document.getElementById(id); if (a) a.href = CV_FILES[lang] || CV_FILES.en; });
+    document.title = tr ? 'Elbaraa Refaie — Kıdemli Otomasyon Mühendisi' : 'Elbaraa Refaie — Senior Automation Engineer';
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+  }
+  // Video titles are generated empty: seed their EN text
+  $$('[data-i18n]').forEach(el => { if (!el.dataset.en && EN_VIDEO[el.dataset.i18n]) el.dataset.en = EN_VIDEO[el.dataset.i18n]; });
+
+  let lang = 'en';
+  try {
+    lang = localStorage.getItem('lang') || ((navigator.language || '').toLowerCase().startsWith('tr') ? 'tr' : 'en');
+  } catch (e) {}
+  langBtn.addEventListener('click', () => setLang(document.documentElement.lang === 'tr' ? 'en' : 'tr'));
+  setLang(lang);
+
+  /* ---------- THEME ---------- */
+  const themeToggle = $('#theme-toggle-input');
+  let theme = 'dark';
+  try { theme = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+  if (theme === 'light') { document.documentElement.setAttribute('data-theme', 'light'); themeToggle.checked = true; }
+  themeToggle.addEventListener('change', e => {
+    if (e.target.checked) document.documentElement.setAttribute('data-theme', 'light');
+    else document.documentElement.removeAttribute('data-theme');
+    try { localStorage.setItem('theme', e.target.checked ? 'light' : 'dark'); } catch (er) {}
   });
 
-  // Animate bars on about section
-  const aboutObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.lang-fill').forEach(bar => {
-          setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 300);
-        });
-      }
+  /* ---------- CURSOR (desktop only) ---------- */
+  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    const cursor = $('#cursor'), ring = $('#cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx - 6 + 'px'; cursor.style.top = my - 6 + 'px'; });
+    (function anim() { rx += (mx - rx) * .12; ry += (my - ry) * .12; ring.style.left = rx - 18 + 'px'; ring.style.top = ry - 18 + 'px'; requestAnimationFrame(anim); })();
+    document.addEventListener('mouseover', e => {
+      cursor.style.transform = e.target.closest('a,button,.project-card,.stat-box,.theme-toggle-label') ? 'scale(2.5)' : 'scale(1)';
     });
-  }, { threshold: 0.3 });
+  }
 
-  document.querySelectorAll('.about-sidebar').forEach(el => aboutObserver.observe(el));
+  /* ---------- SCROLL REVEAL ---------- */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((en, i) => {
+      if (!en.isIntersecting) return;
+      setTimeout(() => {
+        en.target.classList.add('visible');
+        $$('.skill-fill,.lang-fill', en.target).forEach(b => { b.style.width = b.dataset.width + '%'; });
+      }, i * 80);
+      io.unobserve(en.target);
+    });
+  }, { threshold: .1 });
+  $$('.reveal,.exp-item,.project-card,.skill-category,.pub-item,.award-item,.video-card').forEach(el => io.observe(el));
 
-  // Active nav on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const aboutIO = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) $$('.lang-fill', en.target).forEach(b => setTimeout(() => { b.style.width = b.dataset.width + '%'; }, 300)); });
+  }, { threshold: .3 });
+  $$('.about-sidebar').forEach(el => aboutIO.observe(el));
 
+  $$('.project-card').forEach((c, i) => { c.style.transitionDelay = i * .1 + 's'; });
+
+  /* ---------- ACTIVE NAV ---------- */
+  const sections = $$('section[id]'), links = $$('.nav-links a');
   window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 100) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--text)' : '';
-    });
-  });
-
-  // Stagger project cards
-  document.querySelectorAll('.project-card').forEach((card, i) => {
-    card.style.transitionDelay = i * 0.1 + 's';
-  });
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+    links.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--accent)' : ''; });
+  }, { passive: true });
+})();
 </script>
 </body>
 </html>
